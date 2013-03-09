@@ -3,6 +3,8 @@ katamari-tokei
 
 ###### A clock design inspired by Katamari Damacy
 
+![Initial Design](http://i.imgur.com/9yswkCy.png)
+
 **Features to implement:**
 
 Basics:
