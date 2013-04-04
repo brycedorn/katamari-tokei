@@ -1,0 +1,51 @@
+Katamari Clock
+
+//Pseudocode:
+
+clock{
+	
+    static:
+
+	int hours = current hour //24 hr format
+	int minutes = current minute
+	int seconds = current seconds
+
+	//set background, if new hour then check for update
+
+	if(hour > 20 || hour < 7) //nighttime
+		background = deep navy color
+		stars = true
+	if(hour >= 7 && hour < 10) //morning
+		background = very light blue
+		sun rays = true //moving in circle would look nice
+		clouds = true
+	if(hour >= 10 && hour < 4) //day
+		background = light blue
+		sun = true
+		clouds = true
+	if(hour >= 4 && hour < 7) //dusk
+		background = reddish orange
+		sun rays = true
+
+	//mechanics
+
+	double radius = seconds * whatever
+	double katacoordsX
+		   katacoordsY = something that moves in arc to right
+
+	double princesize = seconds * whatever
+	double princecoordsX
+		   princecoordsY = something that moves in arc to left
+
+	draw prince()
+	draw kata()
+
+	if(seconds == 59)
+		do{
+			katamari roll off screen to right
+			new katamari roll on screen from left
+			if(minutes!=60)
+				new katamari added to minute display
+			else make some sort of animation to collect minutes, update hour
+		}
+}
