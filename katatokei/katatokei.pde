@@ -1,9 +1,12 @@
-PImage prince;
+PImage prince1, prince2, ball;
+int width = 600, height = 800;
 
 void setup() {
-  prince = loadImage("http://www.freewebs.com/katamari_fan/prince.jpg");
-  size(600, 800);
-  smooth();
+  frameRate(60);
+  prince1 = loadImage("img/prince1.png");
+  prince2 = loadImage("img/prince2.png");
+  ball = loadImage("img/ball1.png");
+  size(width, height); //or whatever res our phone is
   noStroke();
   int hour = hour();
   //if(hour >= 7 && hour < 10) //morning
@@ -58,7 +61,7 @@ void draw() {
   }
   
   if(sun) { //draw the sun
-    
+      //fill();
   }
   if(sunrays) { //draw sunrays
     
@@ -69,19 +72,32 @@ void draw() {
   if(stars) { //draw clouds
     
   }
-
-  //ball
-  fill(76,197,82);
-  ellipse(350+s/4,700-s,s*2,s*2);
-  
-  //prince
-  image(prince,250-s/2,600-s/8,100-s/4,160-s/4);
-  
-  //hours
-  for(int i=0;i<hour;i++) {
-    ellipse(30+30*i,20,20,20); //change to arc perhaps
-  }
   
   //base
+  fill(76,197,82);
   ellipse(300,1500,1600,1600);
+
+  //ball
+  pushMatrix();
+  //rotate(cos(s)); //is being weird - might be easier to just use modulus to fake rotation
+  image(ball,width*.4+s/6,height*.7-s,160+s,160+s);
+  popMatrix();
+  
+  //prince
+  PImage prince;
+  if(s%2==0) prince = prince1;
+  else prince = prince2;
+  image(prince,width*.3-s/4,height*.75-s/8,100-s/4,160-s/4);
+  
+  //hours -- could go for arc but that's trickier            
+  int j = 0;
+  int h = 1;
+  for(int i=0;i<hour;i++) {
+    j += 1;
+    if(j*50>width) {
+      j = 1;
+      h += 1;
+    }
+    image(ball,20+40*j,40*h,30,30);
+  }
 }
