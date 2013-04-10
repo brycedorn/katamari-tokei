@@ -27,7 +27,8 @@ void draw() {
   int sec = second();
   int min = minute();
   int hour = hour();
-  int s = mil / 100;
+  float s = mil/100;
+  float t = (mil/1000)%30;
   
   //environment effects
   boolean stars=false, clouds=false, sun=false, sunrays=false;
@@ -53,7 +54,7 @@ void draw() {
     sun = false;
     stars = false;
   }
-  if(hour > 20 || hour < 7) { //nighttime
+  else if(hour > 20 || hour < 7) { //nighttime
     stars = true;
     clouds = true;
     sunrays = false;
@@ -69,7 +70,7 @@ void draw() {
   if(clouds) { //draw clouds
     
   }
-  if(stars) { //draw clouds
+  if(stars) { //draw stars lol
     
   }
   
@@ -79,15 +80,18 @@ void draw() {
 
   //ball
   pushMatrix();
-  //rotate(cos(s)); //is being weird - might be easier to just use modulus to fake rotation
-  image(ball,width*.4+s/6,height*.7-s,160+s,160+s);
+  translate(width*.4, height*.7);
+  rotate(radians(frameCount));
+  translate(-(width*.4+t), -(height*.7-t));
+  //translate(-(300+ball.width/2)/4, -(400+ball.height/2));
+  image(ball,width*.4+t,height*.7-t,160+t,160+t);
   popMatrix();
   
   //prince
   PImage prince;
   if(s%2==0) prince = prince1;
   else prince = prince2;
-  image(prince,width*.3-s/4,height*.75-s/8,100-s/4,160-s/4);
+  image(prince,width*.3+t/2,height*.7+t/6,100-t/4,160-t/4);
   
   //hours -- could go for arc but that's trickier            
   int j = 0;
