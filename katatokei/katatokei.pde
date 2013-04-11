@@ -19,7 +19,6 @@ int SPACE_MIN_X = 0,
 // not constants
 // ------------------------------------------------------------
 PImage prince1, prince2, ball, grass, cloudspng, starspng;
-PFont font;
 int princeFrames; //for prince animation
 
 Star[] stars = new Star[MIN_IN_HR];
@@ -68,17 +67,10 @@ void draw() {
   
   // time since program start
   float mil = millis();
-  float relSec = (mil/1000) % SEC_IN_MIN;
+  float relSec = second();
   
   // overlay bg
   background(188,222,255);
-  
-   //write text in bg
-  font = loadFont("data/HelveticaNeue-Bold-48.vlw");
-  textFont(font, 800);
-  int hourdisp = hour%12;
-  fill(255, 255, 255, 100);
-  text(hour, width/7, height-100);
     
   drawEnvironment(hour);
 
@@ -136,9 +128,7 @@ void drawEnvironment(int hour) {
     translate(width/2,1200);
     rotate(-frameCount*radians(90)/600);
     translate(-1200,-1200);
-    tint(255, 240);
     image(cloudspng,0,0,2400,2400);
-    tint(255,255);
     translate(-width/2, -1200);
     popMatrix();
     }
@@ -169,15 +159,20 @@ void drawGrass(float relSec) {
 // ------------------------------------------------------------
 void drawBall(float relSec) {
   pushMatrix();
-  float change = 7*relSec/2;
+  float change = 6*relSec/2;
   translate(
+    width*.5,
+    height-(height*.1+80+change)
+  );
+  /*translate(
     width*.43+80+change,
     height-(height*.08+80+change)
-  );
+  );*/
   rotate(frameCount*radians(90)/15);
   translate(-80-change, -80-change);
-  image(ball, 0, 0, 160+7*relSec, 160+7*relSec);
-  translate(-width*.43, -height*.7);
+  image(ball, 0, 0, 160+6*relSec, 160+6*relSec);
+  translate(-(width*.5-80), -height*.9);
+  //translate(-width*.43, -height*.7);
   popMatrix();
 }
 
@@ -185,14 +180,15 @@ void drawBall(float relSec) {
 // ------------------------------------------------------------
 void drawPrince(float mil, float relSec) {
   PImage prince;
+  float change = 6*relSec/2;
   princeFrames++;
   if(princeFrames>12) prince = prince2;
   else prince = prince1;
   if(princeFrames>25) princeFrames=0;
   image(
     prince,
-    width*.3+relSec/2,
-    height*.7+relSec/6,
+    width*.21+ball.width/(change+80),
+    height*.7+change/(relSec+1),
     100-relSec/4,
     160-relSec/4
   );
