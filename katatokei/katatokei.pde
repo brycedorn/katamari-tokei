@@ -33,17 +33,17 @@ Star newStar = null;
 void setup() {
   frameRate(60);
 
-  p1 = loadImage("data/prince/p1.png");
-  p2 = loadImage("data/prince/p2.png");
-  p3 = loadImage("data/prince/p3.png");
-  p4 = loadImage("data/prince/p4.png");
-  p5 = loadImage("data/prince/p5.png");
-  p6 = loadImage("data/prince/p6.png");
-  ball = loadImage("data/blur.png");
-  grass = loadImage("data/grass.png");
-  cloudspng = loadImage("data/cloudspng.png");
-  starspng = loadImage("data/starspng.png");
-  bg_gradient = loadImage("data/bg-gradient.png");
+  p1 = loadImage("p1.png");
+  p2 = loadImage("p2.png");
+  p3 = loadImage("p3.png");
+  p4 = loadImage("p4.png");
+  p5 = loadImage("p5.png");
+  p6 = loadImage("p6.png");
+  ball = loadImage("blur.png");
+  grass = loadImage("grass.png");
+  cloudspng = loadImage("cloudspng.png");
+  starspng = loadImage("starspng.png");
+  bg_gradient = loadImage("bg-gradient.png");
   
   size(600, 800); // or whatever res our phone is
   noStroke();
@@ -92,7 +92,7 @@ void draw() {
   }
   
   // write text in bg
-  font = loadFont("data/HelveticaNeue-Bold-48.vlw");
+  font = loadFont("HelveticaNeue-Bold-48.vlw");
   textFont(font, 800);
   int hourdisp = hour%12;
   fill(255, 255, 255, 100);
