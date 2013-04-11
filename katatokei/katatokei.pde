@@ -1,6 +1,7 @@
 // GLOBAL VARS
 // ================================================================================
 PImage prince1, prince2, ball, grass;
+int i; //for prince animation
 
 // Constants
 // ------------------------------------------------------------
@@ -63,10 +64,7 @@ void draw() {
     
   drawEnvironment(hour);
 
-  // base
-  fill(76,197,82);
-  image(grass,-30,700,670,183);
-  
+  drawGrass(relSec);
   drawBall(relSec);
   drawPrince(mil, relSec);
 }
@@ -107,6 +105,18 @@ void drawEnvironment(int hour) {
   }  
 }
 
+// Ground
+// ------------------------------------------------------------
+void drawGrass(float relSec) {
+  pushMatrix();
+  translate(300,1450);
+  rotate(-frameCount*radians(90)/150);
+  translate(-800,-800);
+  image(grass,0,0,1600,1600);
+  translate(-width*.43, -height*.7);
+  popMatrix();
+}
+
 // Ball
 // ------------------------------------------------------------
 void drawBall(float relSec) {
@@ -123,16 +133,21 @@ void drawBall(float relSec) {
   popMatrix();
 }
 
-// Ball
+// Prince
 // ------------------------------------------------------------
 void drawPrince(float mil, float relSec) {
   PImage prince;
+  i++;
+  if(i>12) prince = prince2;
+  else prince = prince1;
+  if(i>25) i=0;
+  /*
   if(mil%2 == 0) {
     prince = prince1;
   } else {
     prince = prince2;
   }
-  
+  */
   image(prince,
         width*.3+relSec/2,
         height*.7+relSec/6,
