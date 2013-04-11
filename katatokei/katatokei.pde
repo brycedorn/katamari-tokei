@@ -98,12 +98,12 @@ void draw() {
   if(hourdisp>9) {
     textFont(font, 650);
     textAlign(CENTER);
-    text(hour, width/2, height-100);
+    text(hourdisp, width/2, height-100);
   }
   else {
     textFont(font, 800);
     textAlign(CENTER);
-    text(hour, width/2, height-100);
+    text(hourdisp, width/2, height-100);
   }
   //fill(255, 255, 255, 100);
   //text(hour, width/7, height-100);
@@ -226,7 +226,7 @@ void drawBall(float relSec) {
     -p,
     height-(height*.1+80+change)
     );
-    p = p-6;
+    p = p-5.48;
     rotate(frameCount*radians(90)/10);
     translate(-80-change, -80-change);
     image(ball, 0, 0, 160+6*relSec, 160+6*relSec);
@@ -246,7 +246,7 @@ void drawBall(float relSec) {
   else if(relSec>=58){
     translate(
       width*.5+t,
-      height-(height*.1+80+change)
+      height-(height*.1+80+change)+t/10
     );
     t = t+10;
     rotate(frameCount*radians(90)/10);
@@ -275,7 +275,7 @@ void drawPrince(float mil, float relSec) {
   if(relSec<2) {
     image(
     prince,
-    -p-180,
+    -p-170,
     height*.7+change/(relSec+1),
     100-relSec/4,
     160-relSec/4
@@ -285,7 +285,7 @@ void drawPrince(float mil, float relSec) {
     image(
     prince,
     width*.21+ball.width/(change+80)+t,
-    height*.7+change/(relSec+1),
+    height*.7+change/(relSec+1)+t/10,
     100-relSec/4,
     160-relSec/4
   );
