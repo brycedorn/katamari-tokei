@@ -1,4 +1,4 @@
-PImage prince1, prince2, ball;
+PImage prince1, prince2, ball,grass;
 int width = 600, height = 800;
 
 void setup() {
@@ -6,6 +6,7 @@ void setup() {
   prince1 = loadImage("img/prince1.png");
   prince2 = loadImage("img/prince2.png");
   ball = loadImage("img/ball1.png");
+  grass = loadImage("img/grassmove.png");
   size(width, height); //or whatever res our phone is
   noStroke();
   int hour = hour();
@@ -76,14 +77,15 @@ void draw() {
   
   //base
   fill(76,197,82);
-  ellipse(300,1500,1600,1600);
+  image(grass,-30,700,300,183);
+
 
   //ball
   pushMatrix();
   translate(width*.4, height*.7);
   rotate(radians(frameCount));
-  translate(-(width*.4+t), -(height*.7-t));
-  //translate(-(300+ball.width/2)/4, -(400+ball.height/2));
+  translate(-(ball.width), -(ball.height));
+  //translate(-(-50+ball.width/2)/4, -(-50+ball.height/2));
   image(ball,width*.4+t,height*.7-t,160+t,160+t);
   popMatrix();
   
