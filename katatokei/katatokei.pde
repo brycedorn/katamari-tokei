@@ -30,12 +30,12 @@ Star newStar = null;
 void setup() {
   frameRate(60);
   
-  prince1 = loadImage("img/prince1.png");
-  prince2 = loadImage("img/prince2.png");
-  ball = loadImage("img/ball1.png");
-  grass = loadImage("img/grassmove.png");
+  prince1 = loadImage("prince1.png");
+  prince2 = loadImage("prince2.png");
+  ball = loadImage("ball1.png");
+  grass = loadImage("grassmove.png");
   
-  size(width, height); // or whatever res our phone is
+  size(600, 800); // or whatever res our phone is
   noStroke();
   
   int hour = hour();
