@@ -1,21 +1,28 @@
 // GLOBAL VARS
-// ================================================================================
-PImage prince1, prince2, ball, grass;
-int i; //for prince animation
-
-// Constants
+//
+// constants
 // ------------------------------------------------------------
 int width = 600, height = 800;
 
-int SEC_IN_MIN = 5,
-    MIN_IN_HR = 5;
+int SEC_IN_MIN = 60,
+    MIN_IN_HR = 60,
+    HR_IN_DAY = 24;
 
+// bounds for the stars in space
 int SPACE_MIN_X = 0,
     SPACE_MAX_X = width,
     SPACE_MIN_Y = 0,
     SPACE_MAX_Y = height/4,
     STARSIZE_MIN = 5,
     STARSIZE_MAX = 50;
+
+// not constants
+// ------------------------------------------------------------
+PImage prince1, prince2, ball, grass;
+int i; //for prince animation
+
+Star[] stars = new Star[MIN_IN_HR];
+Star newStar = null;
 
 
 // SETUP
@@ -51,9 +58,10 @@ void setup() {
 // ================================================================================
 void draw() {  
   // current time
-  int hour = hour();
-  int min = minute();
-  int sec = second();
+  // modulus'd for testing purposes, if we want smaller values
+  int hour = hour() % HR_IN_DAY;
+  int min = minute() % MIN_IN_HR;
+  int sec = second() % SEC_IN_MIN;
   
   // time since program start
   float mil = millis();
@@ -67,6 +75,10 @@ void draw() {
   drawGrass(relSec);
   drawBall(relSec);
   drawPrince(mil, relSec);
+
+  // stars
+  configureStars(sec, min);
+  drawStars();
 }
 
 // Environment Effects
@@ -141,17 +153,65 @@ void drawPrince(float mil, float relSec) {
   if(i>12) prince = prince2;
   else prince = prince1;
   if(i>25) i=0;
-  /*
-  if(mil%2 == 0) {
-    prince = prince1;
-  } else {
-    prince = prince2;
-  }
-  */
-  image(prince,
-        width*.3+relSec/2,
-        height*.7+relSec/6,
-        100-relSec/4,
-        160-relSec/4
+  image(
+    prince,
+    width*.3+relSec/2,
+    height*.7+relSec/6,
+    100-relSec/4,
+    160-relSec/4
   );
+}
+
+// Stars
+// ------------------------------------------------------------
+void addStar(int idx) {
+  if (stars[idx] == null) {
+    stars[idx] = new Star(
+      random(SPACE_MIN_X, SPACE_MAX_X),
+      random(SPACE_MIN_Y, SPACE_MAX_Y),
+      random(STARSIZE_MIN, STARSIZE_MAX)
+    );
+  }
+}
+
+void configureStars(int sec, int min) {
+  // add a star every minute
+  if (sec == 0) {
+    // print("Time: sec=" + sec + "; min=" + min + "\n");
+    addStar(min);
+  }
+
+  // reset the stars every hour
+  if (min == 0) {
+    stars = new Star[MIN_IN_HR];
+  }
+}
+
+void drawStars() {
+  for (int i = 0; i < MIN_IN_HR; i++) {
+    if (stars[i] != null) {
+      stars[i].draw();
+    }
+  }
+}
+
+
+// CLASSES
+// ================================================================================
+
+// Star
+// ------------------------------------------------------------
+class Star {
+  float x, y, size;
+  PImage img = ball;
+
+  Star(float xP, float yP, float sizeP) {
+    x = xP;
+    y = yP;
+    size = sizeP;
+  }
+
+  void draw() {
+    image(img, x, y, size, size);
+  }
 }
