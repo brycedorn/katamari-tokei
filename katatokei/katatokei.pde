@@ -40,7 +40,7 @@ void setup() {
   p5 = loadImage("data/prince/p5.png");
   p6 = loadImage("data/prince/p6.png");
   ball = loadImage("data/blur.png");
-  grass = loadImage("data/grassmove.png");
+  grass = loadImage("data/grass.png");
   cloudspng = loadImage("data/cloudspng.png");
   starspng = loadImage("data/starspng.png");
   bg_gradient = loadImage("data/bg-gradient.png");
