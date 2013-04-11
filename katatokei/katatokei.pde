@@ -93,10 +93,20 @@ void draw() {
   
   // write text in bg
   font = loadFont("HelveticaNeue-Bold-48.vlw");
-  textFont(font, 800);
-  int hourdisp = hour%12;
   fill(255, 255, 255, 100);
-  text(hour, width/7, height-100);
+  int hourdisp = hour%12;
+  if(hourdisp>9) {
+    textFont(font, 650);
+    textAlign(CENTER);
+    text(hour, width/2, height-100);
+  }
+  else {
+    textFont(font, 800);
+    textAlign(CENTER);
+    text(hour, width/2, height-100);
+  }
+  //fill(255, 255, 255, 100);
+  //text(hour, width/7, height-100);
   drawEnvironment(hour);
 
   drawGrass(relSec);
@@ -205,17 +215,46 @@ void drawGrass(float relSec) {
 
 // Ball
 // ------------------------------------------------------------
+float t = 10.0;
+float p = 500.0;
 void drawBall(float relSec) {
   pushMatrix();
   float change = 6*relSec/2;
+  if(relSec<2) {
+    t=0;
+    translate(
+    -p,
+    height-(height*.1+80+change)
+    );
+    p = p-6;
+    rotate(frameCount*radians(90)/10);
+    translate(-80-change, -80-change);
+    image(ball, 0, 0, 160+6*relSec, 160+6*relSec);
+    translate(-(width*.5-80), -height*.9);
+  }   
+  else if(relSec>=2 && relSec<58) {
+    p=0;
   translate(
     width*.5,
     height-(height*.1+80+change)
-  );
-  rotate(frameCount*radians(90)/10);
-  translate(-80-change, -80-change);
-  image(ball, 0, 0, 160+6*relSec, 160+6*relSec);
-  translate(-(width*.5-80), -height*.9);
+    );
+    rotate(frameCount*radians(90)/10);
+    translate(-80-change, -80-change);
+    image(ball, 0, 0, 160+6*relSec, 160+6*relSec);
+    translate(-(width*.5-80), -height*.9);
+  }
+  else if(relSec>=58){
+    translate(
+      width*.5+t,
+      height-(height*.1+80+change)
+    );
+    t = t+10;
+    rotate(frameCount*radians(90)/10);
+    translate(-80-change, -80-change);
+    image(ball, 0, 0, 160+6*relSec, 160+6*relSec);
+    translate(-(width*.5-80), -height*.9);
+  }
+  
   popMatrix();
 }
 
@@ -233,13 +272,33 @@ void drawPrince(float mil, float relSec) {
   if(princeFrames>numFrames*6) princeFrames=0;
   
   float change = 6*relSec/2;
-  image(
+  if(relSec<2) {
+    image(
     prince,
-    width*.21+ball.width/(change+80),
+    -p-180,
     height*.7+change/(relSec+1),
     100-relSec/4,
     160-relSec/4
   );
+  }
+  else if(relSec>=58) {
+    image(
+    prince,
+    width*.21+ball.width/(change+80)+t,
+    height*.7+change/(relSec+1),
+    100-relSec/4,
+    160-relSec/4
+  );
+  }
+  else {
+    image(
+      prince,
+      width*.21+ball.width/(change+80),
+      height*.7+change/(relSec+1),
+      100-relSec/4,
+      160-relSec/4
+    );
+  }
 }
 
 // Minutes
