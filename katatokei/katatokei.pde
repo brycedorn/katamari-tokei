@@ -123,7 +123,7 @@ void drawBall(float relSec) {
   popMatrix();
 }
 
-// Ball
+// Prince
 // ------------------------------------------------------------
 void drawPrince(float mil, float relSec) {
   PImage prince;
@@ -133,10 +133,11 @@ void drawPrince(float mil, float relSec) {
     prince = prince2;
   }
   
-  image(prince,
-        width*.3+relSec/2,
-        height*.7+relSec/6,
-        100-relSec/4,
-        160-relSec/4
+  image(
+    prince,
+    width*.3+relSec/2,
+    height*.7+relSec/6,
+    100-relSec/4,
+    160-relSec/4
   );
 }
