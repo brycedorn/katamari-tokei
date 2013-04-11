@@ -18,7 +18,8 @@ int SPACE_MIN_X = 0,
 
 // not constants
 // ------------------------------------------------------------
-PImage prince1, prince2, ball, grass, cloudspng, starspng;
+PImage prince1, prince2, ball, grass, cloudspng, starspng, bg_gradient;
+PFont font;
 int princeFrames; //for prince animation
 
 Star[] stars = new Star[MIN_IN_HR];
@@ -36,23 +37,23 @@ void setup() {
   grass = loadImage("data/grassmove.png");
   cloudspng = loadImage("data/cloudspng.png");
   starspng = loadImage("data/starspng.png");
+  bg_gradient = loadImage("data/bg-gradient.png");
   
   size(600, 800); // or whatever res our phone is
   noStroke();
   
   int hour = hour();
   background(188,222,255);
-  /*
+  
   if(hour >= 7 && hour < 10) { //morning
     background(188,222,255);
   } else if(hour >= 10 && hour < 16) { //day
     background(89,176,246);
-  } else if(hour >= 16 && hour < 20) { //dusk
+  } else if(hour >= 16 && hour < 19) { //dusk
     background(255,104,10);
-  } else if(hour >= 20 || hour < 7) { //nighttime
+  } else if(hour >= 19 || hour < 7) { //nighttime
     background(46,95,132);
   }
-  */
 }
 
 
@@ -70,8 +71,26 @@ void draw() {
   float relSec = second();
   
   // overlay bg
-  background(188,222,255);
-    
+  if(hour >= 7 && hour < 10) { //morning
+    background(225, 229, 13);
+    //background(188,222,255);
+  } else if(hour >= 10 && hour < 16) { //day
+    background(89,176,246);
+  } else if(hour >= 16 && hour < 19) { //dusk
+    background(232, 35, 12);
+    //background(255,104,10);
+    image(bg_gradient, 0, 0, width, height);
+  } else if(hour >= 19 || hour < 7) { //nighttime
+    background(0,5,110);
+    image(bg_gradient, 0, 0, width, height);
+  }
+  
+  // write text in bg
+  font = loadFont("data/HelveticaNeue-Bold-48.vlw");
+  textFont(font, 800);
+  int hourdisp = hour%12;
+  fill(255, 255, 255, 100);
+  text(hour, width/7, height-100);
   drawEnvironment(hour);
 
   drawGrass(relSec);
@@ -89,25 +108,28 @@ void drawEnvironment(int hour) {
   boolean clouds=true, sun=false, sunrays=false, starry=false;
   
   // determine effects
-  /*
+  
   if(hour >= 7 && hour < 10) { //morning
     sunrays = true; //moving in circle would look nice
     clouds = true;
     sun = false;
-  } else if(hour >= 10 && hour < 4) { //day
+    starry = false;
+  } else if(hour >= 10 && hour < 16) { //day
     sun = true;
     clouds = true;
     sunrays = false;
-  } else if(hour >= 4 && hour < 7) { //dusk
+    starry = false;
+  } else if(hour >= 16 && hour < 19) { //dusk
     sunrays = true;
     clouds = false;
     sun = false;
-  } else if(hour > 20 || hour < 7) { // night
-    clouds = true;
+    starry = false;
+  } else if(hour >= 19 || hour < 7) { // night
+    clouds = false;
     sunrays = false;
     sun = false;
+    starry = true;
   }
-  */
   
   // apply effects
   if(sun) {
@@ -128,8 +150,10 @@ void drawEnvironment(int hour) {
     translate(width/2,1200);
     rotate(-frameCount*radians(90)/600);
     translate(-1200,-1200);
+    tint(255, 240);
     image(cloudspng,0,0,2400,2400);
     translate(-width/2, -1200);
+    tint(255, 255);
     popMatrix();
     }
    if(starry) {
@@ -137,8 +161,10 @@ void drawEnvironment(int hour) {
     translate(width/2,800);
     rotate(-frameCount*radians(90)/600);
     translate(-800,-800);
+    tint(255, 210);
     image(starspng,0,0,1600,1600);
     translate(-width/2, -800);
+    tint(255, 255);
     popMatrix();
    }  
 }
