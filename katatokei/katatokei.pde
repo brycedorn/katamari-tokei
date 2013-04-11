@@ -33,12 +33,12 @@ Star newStar = null;
 void setup() {
   frameRate(60);
 
-  p1 = loadImage("data/prince/p1.png");
-  p2 = loadImage("data/prince/p2.png");
-  p3 = loadImage("data/prince/p3.png");
-  p4 = loadImage("data/prince/p4.png");
-  p5 = loadImage("data/prince/p5.png");
-  p6 = loadImage("data/prince/p6.png");
+  p1 = loadImage("data/p1.png");
+  p2 = loadImage("data/p2.png");
+  p3 = loadImage("data/p3.png");
+  p4 = loadImage("data/p4.png");
+  p5 = loadImage("data/p5.png");
+  p6 = loadImage("data/p6.png");
   ball = loadImage("data/blur.png");
   grass = loadImage("data/grass.png");
   cloudspng = loadImage("data/cloudspng.png");
