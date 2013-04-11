@@ -29,7 +29,7 @@ void draw() {
   int min = minute();
   int hour = hour();
   float s = mil/100;
-  float t = (mil/1000)%30;
+  float t = (mil/1000)%60;
   
   //environment effects
   boolean stars=false, clouds=false, sun=false, sunrays=false;
@@ -77,23 +77,31 @@ void draw() {
   
   //base
   fill(76,197,82);
-  image(grass,-30,700,300,183);
+  image(grass,-30,700,670,183);
 
 
   //ball
+  //pushMatrix();
+  //translate(300+80, 400+80);
+  //rotate(frameCount*radians(90)/20);
+  //image(ball,-80+frameCount,-80*frameCount,160+t,160+t);
+  //translate(-300, -400);
+  //popMatrix();
+  
   pushMatrix();
-  translate(width*.4, height*.7);
-  rotate(radians(frameCount));
-  translate(-(ball.width), -(ball.height));
-  //translate(-(-50+ball.width/2)/4, -(-50+ball.height/2));
-  image(ball,width*.4+t,height*.7-t,160+t,160+t);
+  float change = 3*t/2;
+  translate(width*.43+80+change, height-(height*.08+80+change));
+  rotate(frameCount*radians(90)/15);
+  translate(-80-change, -80-change);
+  image(ball, 0, 0, 160+3*t, 160+3*t);
+  translate(-width*.43, -height*.7);
   popMatrix();
   
   //prince
   PImage prince;
   if(s%2==0) prince = prince1;
   else prince = prince2;
-  image(prince,width*.3+t/2,height*.7+t/6,100-t/4,160-t/4);
+  image(prince, width*.3+t*1.2, height*.7+t*1.2, 100-t*1.2, 160-t*1.2);
   
   //hours -- could go for arc but that's trickier            
   int j = 0;
