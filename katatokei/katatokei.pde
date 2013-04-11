@@ -18,8 +18,8 @@ int SPACE_MIN_X = 0,
 
 // not constants
 // ------------------------------------------------------------
-PImage prince1, prince2, ball, grass;
-int i; //for prince animation
+PImage prince1, prince2, ball, grass, cloudspng, starspng;
+int princeFrames; //for prince animation
 
 Star[] stars = new Star[MIN_IN_HR];
 Star newStar = null;
@@ -32,8 +32,10 @@ void setup() {
   
   prince1 = loadImage("img/prince1.png");
   prince2 = loadImage("img/prince2.png");
-  ball = loadImage("img/ball1.png");
+  ball = loadImage("img/blur.png");
   grass = loadImage("img/grassmove.png");
+  cloudspng = loadImage("img/cloudspng.png");
+  starspng = loadImage("img/starspng.png");
   
   size(width, height); // or whatever res our phone is
   noStroke();
@@ -84,9 +86,10 @@ void draw() {
 // Environment Effects
 // ------------------------------------------------------------
 void drawEnvironment(int hour) {
-  boolean clouds=false, sun=false, sunrays=false;
+  boolean clouds=true, sun=true, sunrays=false;
   
   // determine effects
+  /*
   if(hour >= 7 && hour < 10) { //morning
     sunrays = true; //moving in circle would look nice
     clouds = true;
@@ -104,24 +107,38 @@ void drawEnvironment(int hour) {
     sunrays = false;
     sun = false;
   }
+  */
   
   // apply effects
   if(sun) {
-  
+    pushMatrix();
+    translate(width/2,800); //center coords (pos)
+    rotate(-frameCount*radians(90)/1000);
+    translate(-400,-400); //radius
+    fill(255,220,0);
+    ellipse(0,0,100,100); //make sure it's at 0,0
+    translate(-width/2, -800); //center coords (neg)
+    popMatrix();
   }
   if(sunrays) {
-    
+    //eh, do later
   }
   if(clouds) {
-    
-  }  
+    pushMatrix();
+    translate(width/2,1300);
+    rotate(-frameCount*radians(90)/600);
+    translate(-1500,-1500);
+    image(cloudspng,0,0,3000,3000);
+    translate(-width/2, -1300);
+    popMatrix();
+    }  
 }
 
 // Ground
 // ------------------------------------------------------------
 void drawGrass(float relSec) {
   pushMatrix();
-  translate(300,1450);
+  translate(width/2,1450);
   rotate(-frameCount*radians(90)/150);
   translate(-800,-800);
   image(grass,0,0,1600,1600);
@@ -149,10 +166,10 @@ void drawBall(float relSec) {
 // ------------------------------------------------------------
 void drawPrince(float mil, float relSec) {
   PImage prince;
-  i++;
-  if(i>12) prince = prince2;
+  princeFrames++;
+  if(princeFrames>12) prince = prince2;
   else prince = prince1;
-  if(i>25) i=0;
+  if(princeFrames>25) princeFrames=0;
   image(
     prince,
     width*.3+relSec/2,
