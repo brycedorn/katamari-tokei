@@ -29,15 +29,15 @@ Star newStar = null;
 // ================================================================================
 void setup() {
   frameRate(60);
+
+  prince1 = loadImage("data/prince1.png");
+  prince2 = loadImage("data/prince2.png");
+  ball = loadImage("data/blur.png");
+  grass = loadImage("data/grassmove.png");
+  cloudspng = loadImage("data/cloudspng.png");
+  starspng = loadImage("data/starspng.png");
   
-  prince1 = loadImage("img/prince1.png");
-  prince2 = loadImage("img/prince2.png");
-  ball = loadImage("img/blur.png");
-  grass = loadImage("img/grassmove.png");
-  cloudspng = loadImage("img/cloudspng.png");
-  starspng = loadImage("img/starspng.png");
-  
-  size(width, height); // or whatever res our phone is
+  size(600, 800); // or whatever res our phone is
   noStroke();
   
   int hour = hour();
@@ -86,7 +86,7 @@ void draw() {
 // Environment Effects
 // ------------------------------------------------------------
 void drawEnvironment(int hour) {
-  boolean clouds=true, sun=true, sunrays=false;
+  boolean clouds=true, sun=false, sunrays=false, starry=false;
   
   // determine effects
   /*
@@ -125,13 +125,22 @@ void drawEnvironment(int hour) {
   }
   if(clouds) {
     pushMatrix();
-    translate(width/2,1300);
+    translate(width/2,1200);
     rotate(-frameCount*radians(90)/600);
-    translate(-1500,-1500);
-    image(cloudspng,0,0,3000,3000);
-    translate(-width/2, -1300);
+    translate(-1200,-1200);
+    image(cloudspng,0,0,2400,2400);
+    translate(-width/2, -1200);
     popMatrix();
-    }  
+    }
+   if(starry) {
+    pushMatrix();
+    translate(width/2,800);
+    rotate(-frameCount*radians(90)/600);
+    translate(-800,-800);
+    image(starspng,0,0,1600,1600);
+    translate(-width/2, -800);
+    popMatrix();
+   }  
 }
 
 // Ground
