@@ -19,6 +19,7 @@ int SPACE_MIN_X = 0,
 // not constants
 // ------------------------------------------------------------
 PImage prince1, prince2, ball, grass, cloudspng, starspng;
+PFont font;
 int princeFrames; //for prince animation
 
 Star[] stars = new Star[MIN_IN_HR];
@@ -71,6 +72,13 @@ void draw() {
   
   // overlay bg
   background(188,222,255);
+  
+   //write text in bg
+  font = loadFont("data/HelveticaNeue-Bold-48.vlw");
+  textFont(font, 800);
+  int hourdisp = hour%12;
+  fill(255, 255, 255, 100);
+  text(hour, width/7, height-100);
     
   drawEnvironment(hour);
 
@@ -128,7 +136,9 @@ void drawEnvironment(int hour) {
     translate(width/2,1200);
     rotate(-frameCount*radians(90)/600);
     translate(-1200,-1200);
+    tint(255, 240);
     image(cloudspng,0,0,2400,2400);
+    tint(255,255);
     translate(-width/2, -1200);
     popMatrix();
     }
