@@ -58,14 +58,14 @@ void draw() {
   float mil = millis();
   float relSec = (mil/1000) % SEC_IN_MIN;
   
-  //overlay bg
+  // overlay bg
   background(188,222,255);
     
   drawEnvironment(hour);
 
-  //base
+  // base
   fill(76,197,82);
-  image(grass,-30,700,300,183);
+  image(grass,-30,700,670,183);
   
   drawBall(relSec);
   drawPrince(mil, relSec);
@@ -111,15 +111,15 @@ void drawEnvironment(int hour) {
 // ------------------------------------------------------------
 void drawBall(float relSec) {
   pushMatrix();
-  translate(width*.4, height*.7);
-  rotate(radians(frameCount));
-  translate(-(ball.width), -(ball.height));
-  image(ball,
-        width*.4+relSec,
-        height*.7-relSec,
-        160+relSec,
-        160+relSec
+  float change = 3*relSec/2;
+  translate(
+    width*.43+80+change,
+    height-(height*.08+80+change)
   );
+  rotate(frameCount*radians(90)/15);
+  translate(-80-change, -80-change);
+  image(ball, 0, 0, 160+3*relSec, 160+3*relSec);
+  translate(-width*.43, -height*.7);
   popMatrix();
 }
 
@@ -132,6 +132,7 @@ void drawPrince(float mil, float relSec) {
   } else {
     prince = prince2;
   }
+  
   image(prince,
         width*.3+relSec/2,
         height*.7+relSec/6,
