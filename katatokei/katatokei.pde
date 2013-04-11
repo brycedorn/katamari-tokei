@@ -133,14 +133,14 @@ void drawGrass(float relSec) {
 // ------------------------------------------------------------
 void drawBall(float relSec) {
   pushMatrix();
-  float change = 3*relSec/2;
+  float change = 7*relSec/2;
   translate(
     width*.43+80+change,
     height-(height*.08+80+change)
   );
   rotate(frameCount*radians(90)/15);
   translate(-80-change, -80-change);
-  image(ball, 0, 0, 160+3*relSec, 160+3*relSec);
+  image(ball, 0, 0, 160+7*relSec, 160+7*relSec);
   translate(-width*.43, -height*.7);
   popMatrix();
 }
