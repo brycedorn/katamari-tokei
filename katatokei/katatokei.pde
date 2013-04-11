@@ -18,21 +18,27 @@ int SPACE_MIN_X = 0,
 
 // not constants
 // ------------------------------------------------------------
-PImage prince1, prince2, ball, grass, cloudspng, starspng, bg_gradient;
+PImage ball, grass, cloudspng, starspng, bg_gradient;
+PImage p1,p2,p3,p4,p5,p6;
 PFont font;
 int princeFrames; //for prince animation
 
+/*
 Star[] stars = new Star[MIN_IN_HR];
 Star newStar = null;
-
+*/
 
 // SETUP
 // ================================================================================
 void setup() {
   frameRate(60);
 
-  prince1 = loadImage("data/prince1.png");
-  prince2 = loadImage("data/prince2.png");
+  p1 = loadImage("data/prince/p1.png");
+  p2 = loadImage("data/prince/p2.png");
+  p3 = loadImage("data/prince/p3.png");
+  p4 = loadImage("data/prince/p4.png");
+  p5 = loadImage("data/prince/p5.png");
+  p6 = loadImage("data/prince/p6.png");
   ball = loadImage("data/blur.png");
   grass = loadImage("data/grassmove.png");
   cloudspng = loadImage("data/cloudspng.png");
@@ -96,16 +102,17 @@ void draw() {
   drawGrass(relSec);
   drawBall(relSec);
   drawPrince(mil, relSec);
-
-  // stars
+  drawMins(min);
+  /* stars
   configureStars(sec, min);
   drawStars();
+  */
 }
 
 // Environment Effects
 // ------------------------------------------------------------
 void drawEnvironment(int hour) {
-  boolean clouds=true, sun=false, sunrays=false, starry=false;
+  boolean clouds=false, smclouds=false, sun=false, sunrays=false, starry=false;
   
   // determine effects
   
@@ -114,21 +121,25 @@ void drawEnvironment(int hour) {
     clouds = true;
     sun = false;
     starry = false;
+    smclouds = true;
   } else if(hour >= 10 && hour < 16) { //day
     sun = true;
     clouds = true;
     sunrays = false;
     starry = false;
+    smclouds = false;
   } else if(hour >= 16 && hour < 19) { //dusk
     sunrays = true;
     clouds = false;
     sun = false;
     starry = false;
+    smclouds = true;
   } else if(hour >= 19 || hour < 7) { // night
     clouds = false;
     sunrays = false;
     sun = false;
     starry = true;
+    smclouds = true;
   }
   
   // apply effects
@@ -156,10 +167,21 @@ void drawEnvironment(int hour) {
     tint(255, 255);
     popMatrix();
     }
+  if(smclouds) {
+    pushMatrix();
+    translate(width/2,1200);
+    rotate(-frameCount*radians(90)/600);
+    translate(-1200,-1200);
+    tint(255,40);
+    image(cloudspng,0,0,2400,2400);
+    translate(-width/2, -1200);
+    tint(255, 255);
+    popMatrix();
+    }
    if(starry) {
     pushMatrix();
     translate(width/2,800);
-    rotate(-frameCount*radians(90)/600);
+    rotate(-frameCount*radians(90)/800);
     translate(-800,-800);
     tint(255, 210);
     image(starspng,0,0,1600,1600);
@@ -174,7 +196,7 @@ void drawEnvironment(int hour) {
 void drawGrass(float relSec) {
   pushMatrix();
   translate(width/2,1450);
-  rotate(-frameCount*radians(90)/150);
+  rotate(-frameCount*radians(90)/100);
   translate(-800,-800);
   image(grass,0,0,1600,1600);
   translate(-width*.43, -height*.7);
@@ -190,27 +212,27 @@ void drawBall(float relSec) {
     width*.5,
     height-(height*.1+80+change)
   );
-  /*translate(
-    width*.43+80+change,
-    height-(height*.08+80+change)
-  );*/
-  rotate(frameCount*radians(90)/15);
+  rotate(frameCount*radians(90)/10);
   translate(-80-change, -80-change);
   image(ball, 0, 0, 160+6*relSec, 160+6*relSec);
   translate(-(width*.5-80), -height*.9);
-  //translate(-width*.43, -height*.7);
   popMatrix();
 }
 
 // Prince
 // ------------------------------------------------------------
 void drawPrince(float mil, float relSec) {
-  PImage prince;
-  float change = 6*relSec/2;
+  PImage prince = p1;
+  float numFrames = 1;
   princeFrames++;
-  if(princeFrames>12) prince = prince2;
-  else prince = prince1;
-  if(princeFrames>25) princeFrames=0;
+  if(princeFrames>numFrames*1) prince = p2;
+  if(princeFrames>numFrames*2) prince = p3;
+  if(princeFrames>numFrames*3) prince = p4;
+  if(princeFrames>numFrames*4) prince = p5;
+  if(princeFrames>numFrames*5) prince = p6;
+  if(princeFrames>numFrames*6) princeFrames=0;
+  
+  float change = 6*relSec/2;
   image(
     prince,
     width*.21+ball.width/(change+80),
@@ -220,8 +242,24 @@ void drawPrince(float mil, float relSec) {
   );
 }
 
+// Minutes
+// ------------------------------------------------------------
+void drawMins(int minutes) {
+  int row=1,num=-1;
+  for(int m=0;m<minutes;m++) {
+    num++;
+    if(15+num*30>=width) {
+      row += 1;
+      num = 0;
+    }
+    fill(255,255,255);
+    ellipse(15+30*num,15+30*(row-1),10,10);
+  }
+}
+
 // Stars
 // ------------------------------------------------------------
+/*
 void addStar(int idx) {
   if (stars[idx] == null) {
     stars[idx] = new Star(
@@ -244,7 +282,6 @@ void configureStars(int sec, int min) {
     stars = new Star[MIN_IN_HR];
   }
 }
-
 void drawStars() {
   for (int i = 0; i < MIN_IN_HR; i++) {
     if (stars[i] != null) {
@@ -273,3 +310,4 @@ class Star {
     image(img, x, y, size, size);
   }
 }
+*/
