@@ -8,25 +8,12 @@ int SEC_IN_MIN = 60,
     MIN_IN_HR = 60,
     HR_IN_DAY = 24;
 
-// bounds for the stars in space
-int SPACE_MIN_X = 0,
-    SPACE_MAX_X = width,
-    SPACE_MIN_Y = 0,
-    SPACE_MAX_Y = height/4,
-    STARSIZE_MIN = 5,
-    STARSIZE_MAX = 50;
-
 // not constants
 // ------------------------------------------------------------
 PImage ball, grass, cloudspng, starspng, bg_gradient;
 PImage p1,p2,p3,p4,p5,p6;
 PFont font;
 int princeFrames; //for prince animation
-
-/*
-Star[] stars = new Star[MIN_IN_HR];
-Star newStar = null;
-*/
 
 // SETUP
 // ================================================================================
@@ -49,7 +36,6 @@ void setup() {
   noStroke();
   
   int hour = hour();
-  background(188,222,255);
   
   if(hour >= 7 && hour < 10) { //morning
     background(188,222,255);
@@ -58,7 +44,7 @@ void setup() {
   } else if(hour >= 16 && hour < 19) { //dusk
     background(255,104,10);
   } else if(hour >= 19 || hour < 7) { //nighttime
-    background(46,95,132);
+    background(46,95,132);            //why is night laggy?
   }
 }
 
@@ -79,12 +65,10 @@ void draw() {
   // overlay bg
   if(hour >= 7 && hour < 10) { //morning
     background(225, 229, 13);
-    //background(188,222,255);
   } else if(hour >= 10 && hour < 16) { //day
     background(89,176,246);
   } else if(hour >= 16 && hour < 19) { //dusk
     background(232, 35, 12);
-    //background(255,104,10);
     image(bg_gradient, 0, 0, width, height);
   } else if(hour >= 19 || hour < 7) { //nighttime
     background(0,5,110);
@@ -92,31 +76,25 @@ void draw() {
   }
   
   // write text in bg
-  font = loadFont("HelveticaNeue-Bold-48.vlw");
+  font = loadFont("Ming-Imperial-48.vlw");
   fill(255, 255, 255, 100);
   int hourdisp = hour%12;
   if(hourdisp>9) {
-    textFont(font, 650);
+    textFont(font, 750);
     textAlign(CENTER);
     text(hourdisp, width/2, height-100);
   }
   else {
-    textFont(font, 800);
+    textFont(font, 850);
     textAlign(CENTER);
     text(hourdisp, width/2, height-100);
   }
-  //fill(255, 255, 255, 100);
-  //text(hour, width/7, height-100);
+  
   drawEnvironment(hour);
-
   drawGrass(relSec);
   drawBall(relSec);
   drawPrince(mil, relSec);
   drawMins(min);
-  /* stars
-  configureStars(sec, min);
-  drawStars();
-  */
 }
 
 // Environment Effects
@@ -125,9 +103,8 @@ void drawEnvironment(int hour) {
   boolean clouds=false, smclouds=false, sun=false, sunrays=false, starry=false;
   
   // determine effects
-  
   if(hour >= 7 && hour < 10) { //morning
-    sunrays = true; //moving in circle would look nice
+    sunrays = true;
     clouds = true;
     sun = false;
     starry = false;
@@ -153,20 +130,20 @@ void drawEnvironment(int hour) {
   }
   
   // apply effects
-  if(sun) {
+  if(sun) { //rotating sun
     pushMatrix();
-    translate(width/2,800); //center coords (pos)
+    translate(width/2,800); //center coords (+)
     rotate(-frameCount*radians(90)/1000);
     translate(-400,-400); //radius
     fill(255,220,0);
     ellipse(0,0,100,100); //make sure it's at 0,0
-    translate(-width/2, -800); //center coords (neg)
+    translate(-width/2, -800); //center coords (-)
     popMatrix();
   }
-  if(sunrays) {
+  if(sunrays) { //rotating sun rays
     //eh, do later
   }
-  if(clouds) {
+  if(clouds) { //rotating clouds
     pushMatrix();
     translate(width/2,1200);
     rotate(-frameCount*radians(90)/600);
@@ -176,29 +153,30 @@ void drawEnvironment(int hour) {
     translate(-width/2, -1200);
     tint(255, 255);
     popMatrix();
-    }
-  if(smclouds) {
+  }
+  if(smclouds) { //less-visible clouds
     pushMatrix();
     translate(width/2,1200);
-    rotate(-frameCount*radians(90)/600);
+    rotate(-frameCount*radians(90)/500);
     translate(-1200,-1200);
     tint(255,40);
     image(cloudspng,0,0,2400,2400);
     translate(-width/2, -1200);
     tint(255, 255);
     popMatrix();
-    }
-   if(starry) {
+  }
+  if(starry) { //rotating stars
     pushMatrix();
     translate(width/2,800);
-    rotate(-frameCount*radians(90)/800);
+    rotate(-frameCount*radians(90)/850);
     translate(-800,-800);
     tint(255, 210);
     image(starspng,0,0,1600,1600);
     translate(-width/2, -800);
     tint(255, 255);
     popMatrix();
-   }  
+    //add moon?
+  }
 }
 
 // Ground
@@ -206,7 +184,10 @@ void drawEnvironment(int hour) {
 void drawGrass(float relSec) {
   pushMatrix();
   translate(width/2,1450);
-  rotate(-frameCount*radians(90)/100);
+  if(relSec>=2 && relSec <58)
+    rotate(-frameCount*radians(90)/100);
+  else 
+    rotate(-frameCount*radians(90)/1000); //frame of reference, should make more fluid tho
   translate(-800,-800);
   image(grass,0,0,1600,1600);
   translate(-width*.43, -height*.7);
@@ -222,11 +203,8 @@ void drawBall(float relSec) {
   float change = 6*relSec/2;
   if(relSec<2) {
     t=0;
-    translate(
-    -p,
-    height-(height*.1+80+change)
-    );
-    p = p-5.48;
+    translate(-p*1.75,height-(height*.1+80+change));
+    p = p-5.95;
     rotate(frameCount*radians(90)/10);
     translate(-80-change, -80-change);
     image(ball, 0, 0, 160+6*relSec, 160+6*relSec);
@@ -234,27 +212,20 @@ void drawBall(float relSec) {
   }   
   else if(relSec>=2 && relSec<58) {
     p=0;
-  translate(
-    width*.5,
-    height-(height*.1+80+change)
-    );
+    translate(width*.5,height-(height*.1+80+change));
     rotate(frameCount*radians(90)/10);
     translate(-80-change, -80-change);
     image(ball, 0, 0, 160+6*relSec, 160+6*relSec);
     translate(-(width*.5-80), -height*.9);
   }
   else if(relSec>=58){
-    translate(
-      width*.5+t,
-      height-(height*.1+80+change)+t/10
-    );
-    t = t+10;
+    translate(width*.5+3*t,height-(height*.1+80+change)+t/10);
+    t+=10;
     rotate(frameCount*radians(90)/10);
     translate(-80-change, -80-change);
     image(ball, 0, 0, 160+6*relSec, 160+6*relSec);
     translate(-(width*.5-80), -height*.9);
   }
-  
   popMatrix();
 }
 
@@ -262,8 +233,10 @@ void drawBall(float relSec) {
 // ------------------------------------------------------------
 void drawPrince(float mil, float relSec) {
   PImage prince = p1;
+  
   float numFrames = 1;
   princeFrames++;
+  if(princeFrames==0) prince = p1; //lol forgot bout this one earlier
   if(princeFrames>numFrames*1) prince = p2;
   if(princeFrames>numFrames*2) prince = p3;
   if(princeFrames>numFrames*3) prince = p4;
@@ -275,98 +248,43 @@ void drawPrince(float mil, float relSec) {
   if(relSec<2) {
     image(
     prince,
-    -p-170,
-    height*.7+change/(relSec+1),
-    100-relSec/4,
-    160-relSec/4
+    -p*1.75-180,
+    height*.7+2*change/(relSec+1),
+    180*.6-relSec*.8,
+    253*.6-relSec*180/253*.8
   );
   }
   else if(relSec>=58) {
     image(
     prince,
-    width*.21+ball.width/(change+80)+t,
-    height*.7+change/(relSec+1)+t/10,
-    100-relSec/4,
-    160-relSec/4
+    width*.21+ball.width/(change+80)+2.2*t,
+    height*.7+3*change/(relSec+1)+t/10,
+    180*.6-relSec*.8,
+    253*.6-relSec*180/253*.8
   );
   }
   else {
     image(
-      prince,
-      width*.21+ball.width/(change+80),
-      height*.7+change/(relSec+1),
-      100-relSec/4,
-      160-relSec/4
-    );
+    prince,
+    width*.21+ball.width/(change+80),
+    height*.7+3*change/(relSec+1),
+    180*.6-relSec*.8,
+    253*.6-relSec*180/253*.8
+  );
   }
 }
 
 // Minutes
 // ------------------------------------------------------------
 void drawMins(int minutes) {
-  int row=1,num=-1;
+  int row=1,col=-1;
   for(int m=0;m<minutes;m++) {
-    num++;
-    if(15+num*30>=width) {
+    col++;
+    if(15+col*30>=width) {
       row += 1;
-      num = 0;
+      col = 0;
     }
     fill(255,255,255);
-    ellipse(15+30*num,15+30*(row-1),10,10);
+    ellipse(15+30*col,15+30*(row-1),10,10);
   }
 }
-
-// Stars
-// ------------------------------------------------------------
-/*
-void addStar(int idx) {
-  if (stars[idx] == null) {
-    stars[idx] = new Star(
-      random(SPACE_MIN_X, SPACE_MAX_X),
-      random(SPACE_MIN_Y, SPACE_MAX_Y),
-      random(STARSIZE_MIN, STARSIZE_MAX)
-    );
-  }
-}
-
-void configureStars(int sec, int min) {
-  // add a star every minute
-  if (sec == 0) {
-    // print("Time: sec=" + sec + "; min=" + min + "\n");
-    addStar(min);
-  }
-
-  // reset the stars every hour
-  if (min == 0) {
-    stars = new Star[MIN_IN_HR];
-  }
-}
-void drawStars() {
-  for (int i = 0; i < MIN_IN_HR; i++) {
-    if (stars[i] != null) {
-      stars[i].draw();
-    }
-  }
-}
-
-
-// CLASSES
-// ================================================================================
-
-// Star
-// ------------------------------------------------------------
-class Star {
-  float x, y, size;
-  PImage img = ball;
-
-  Star(float xP, float yP, float sizeP) {
-    x = xP;
-    y = yP;
-    size = sizeP;
-  }
-
-  void draw() {
-    image(img, x, y, size, size);
-  }
-}
-*/
