@@ -2,8 +2,6 @@
 //
 // constants
 // ------------------------------------------------------------
-int width = 600, height = 800;
-
 int SEC_IN_MIN = 60,
     MIN_IN_HR = 60,
     HR_IN_DAY = 24;
@@ -18,19 +16,21 @@ int princeFrames; //for prince animation
 // SETUP
 // ================================================================================
 void setup() {
+  width = 600;
+  height = 800;
   frameRate(60);
 
-  p1 = loadImage("p1.png");
-  p2 = loadImage("p2.png");
-  p3 = loadImage("p3.png");
-  p4 = loadImage("p4.png");
-  p5 = loadImage("p5.png");
-  p6 = loadImage("p6.png");
-  ball = loadImage("blur.png");
-  grass = loadImage("grass.png");
-  cloudspng = loadImage("cloudspng.png");
-  starspng = loadImage("starspng.png");
-  bg_gradient = loadImage("bg-gradient.png");
+  p1 = loadImage("static/img/p1.png");
+  p2 = loadImage("static/img/p2.png");
+  p3 = loadImage("static/img/p3.png");
+  p4 = loadImage("static/img/p4.png");
+  p5 = loadImage("static/img/p5.png");
+  p6 = loadImage("static/img/p6.png");
+  ball = loadImage("static/img/blur.png");
+  grass = loadImage("static/img/grass.png");
+  cloudspng = loadImage("static/img/cloudspng.png");
+  starspng = loadImage("static/img/starspng.png");
+  bg_gradient = loadImage("static/img/bg-gradient.png");
   
   size(600, 800); // or whatever res our phone is
   noStroke();
