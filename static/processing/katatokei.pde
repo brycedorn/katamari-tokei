@@ -52,7 +52,7 @@ void setup() {
   //starspng = loadImage("static/img/starspng.png");
   bg_gradient = loadImage("static/img/bg-gradient.png");
   
-  size(600, 800); // or whatever res our phone is
+  size(displayWidth, displayHeight);
   noStroke();
   
   int hr = hour();
@@ -64,7 +64,7 @@ void setup() {
   } else if(hr >= 16 && hr < 19) { //dusk
     background(255,104,10);
   } else if(hr >= 19 || hr < 7) { //nighttime
-    background(46,95,132);            //why is night laggy?
+    background(46,95,132);         
   }
 }
 
@@ -283,7 +283,7 @@ void drawPrince(float mil, float relSec) {
     prince,
     width*.21+ball.width/(change+80)+2.2*t,
     height*.7+3*change/(relSec+1)+t/10,
-    180*.6-relSec*.8,
+    180*.6-relSec*.3,
     253*.6-relSec*180/253*.8
   );
   }
