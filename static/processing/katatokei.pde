@@ -48,7 +48,7 @@ void setup() {
   p6 = loadImage("static/img/p6.png");
   ball = loadImage("static/img/blur.png");
   grass = loadImage("static/img/grass.png");
-  cloudspng = loadImage("static/img/cloudspng.png");
+  //cloudspng = loadImage("static/img/cloudspng.png");
   starspng = loadImage("static/img/starspng.png");
   bg_gradient = loadImage("static/img/bg-gradient.png");
   
@@ -169,7 +169,7 @@ void drawEnvironment(int hr) {
     rotate(-frameCount*radians(90)/600);
     translate(-1200,-1200);
     tint(255, 240);
-    image(cloudspng,0,0,2400,2400);
+    //image(cloudspng,0,0,2400,2400);
     translate(-width/2, -1200);
     tint(255, 255);
     popMatrix();
@@ -180,7 +180,7 @@ void drawEnvironment(int hr) {
     rotate(-frameCount*radians(90)/500);
     translate(-1200,-1200);
     tint(255,40);
-    image(cloudspng,0,0,2400,2400);
+    //image(cloudspng,0,0,2400,2400);
     translate(-width/2, -1200);
     tint(255, 255);
     popMatrix();
