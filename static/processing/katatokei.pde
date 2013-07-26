@@ -41,7 +41,7 @@ boolean sketchFullScreen() {
 }
 
 void setup() {
-  width = 1400;
+  width = 1450;
   height = 800;
   frameRate(50);
 
