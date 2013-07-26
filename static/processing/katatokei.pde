@@ -22,8 +22,6 @@ TODO:
 //
 // constants
 // ------------------------------------------------------------
-int width = 1450, height = 800;
-
 int SEC_IN_MIN = 60,
     MIN_IN_HR = 60,
     HR_IN_DAY = 24;
@@ -38,6 +36,8 @@ int princeFrames; //for prince animation
 // SETUP
 // ================================================================================
 void setup() {
+  width = 1450;
+  height = 800;
   frameRate(60);
 
   p1 = loadImage("static/img/p1.png");
@@ -64,7 +64,7 @@ void setup() {
   } else if(hr >= 16 && hr < 19) { //dusk
     background(255,104,10);
   } else if(hr >= 19 || hr < 7) { //nighttime
-    background(46,95,132); 
+    background(46,95,132);            //why is night laggy?
   }
 }
 
@@ -169,7 +169,7 @@ void drawEnvironment(int hr) {
     rotate(-frameCount*radians(90)/600);
     translate(-1200,-1200);
     tint(255, 240);
-    //image(cloudspng,0,0,2400,2400);
+    image(cloudspng,0,0,2400,2400);
     translate(-width/2, -1200);
     tint(255, 255);
     popMatrix();
@@ -180,7 +180,7 @@ void drawEnvironment(int hr) {
     rotate(-frameCount*radians(90)/500);
     translate(-1200,-1200);
     tint(255,40);
-    //image(cloudspng,0,0,2400,2400);
+    image(cloudspng,0,0,2400,2400);
     translate(-width/2, -1200);
     tint(255, 255);
     popMatrix();
