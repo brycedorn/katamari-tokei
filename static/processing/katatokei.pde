@@ -53,8 +53,8 @@ void setup() {
   p6 = loadImage("static/img/p6.png");
   ball = loadImage("static/img/blur.png");
   grass = loadImage("static/img/grass.png");
-  //cloudspng = loadImage("static/img/cloudspng.png");
-  //starspng = loadImage("static/img/starspng.png");
+  cloudspng = loadImage("static/img/cloudspng.png");
+  starspng = loadImage("static/img/starspng.png");
   bg_gradient = loadImage("static/img/bg-gradient.png");
   
   noStroke();
