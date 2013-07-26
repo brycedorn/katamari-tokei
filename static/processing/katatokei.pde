@@ -35,6 +35,11 @@ int princeFrames; //for prince animation
 
 // SETUP
 // ================================================================================
+
+boolean sketchFullScreen() {
+  return true;
+}
+
 void setup() {
   width = 600;
   height = 800;
@@ -52,7 +57,6 @@ void setup() {
   //starspng = loadImage("static/img/starspng.png");
   bg_gradient = loadImage("static/img/bg-gradient.png");
   
-  size(displayWidth, displayHeight);
   noStroke();
   
   int hr = hour();
@@ -64,7 +68,7 @@ void setup() {
   } else if(hr >= 16 && hr < 19) { //dusk
     background(255,104,10);
   } else if(hr >= 19 || hr < 7) { //nighttime
-    background(46,95,132);         
+    background(46,95,132);            //why is night laggy?
   }
 }
 
@@ -292,7 +296,7 @@ void drawPrince(float mil, float relSec) {
     prince,
     width*.21+ball.width/(change+80),
     height*.7+3*change/(relSec+1),
-    180*.6-relSec*.8,
+    180*.6-relSec*.3,
     253*.6-relSec*180/253*.8
   );
   }
