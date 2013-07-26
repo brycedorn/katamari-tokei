@@ -41,9 +41,9 @@ boolean sketchFullScreen() {
 }
 
 void setup() {
-  width = 600;
-  height = 800;
-  frameRate(60);
+  width = 1400;
+  height = 900;
+  frameRate(50);
 
   p1 = loadImage("static/img/p1.png");
   p2 = loadImage("static/img/p2.png");
@@ -58,6 +58,7 @@ void setup() {
   bg_gradient = loadImage("static/img/bg-gradient.png");
   
   noStroke();
+  size(width,height);
   
   int hr = hour();
   
