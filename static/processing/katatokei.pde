@@ -38,19 +38,19 @@ int princeFrames; //for prince animation
 // SETUP
 // ================================================================================
 void setup() {
-  frameRate(40);
+  frameRate(60);
 
-  p1 = loadImage("p1.png");
-  p2 = loadImage("p2.png");
-  p3 = loadImage("p3.png");
-  p4 = loadImage("p4.png");
-  p5 = loadImage("p5.png");
-  p6 = loadImage("p6.png");
-  ball = loadImage("blur.png");
-  grass = loadImage("grass.png");
-  cloudspng = loadImage("cloudspng.png");
-  starspng = loadImage("starspng.png");
-  bg_gradient = loadImage("bg-gradient.png");
+  p1 = loadImage("static/img/p1.png");
+  p2 = loadImage("static/img/p2.png");
+  p3 = loadImage("static/img/p3.png");
+  p4 = loadImage("static/img/p4.png");
+  p5 = loadImage("static/img/p5.png");
+  p6 = loadImage("static/img/p6.png");
+  ball = loadImage("static/img/blur.png");
+  grass = loadImage("static/img/grass.png");
+  cloudspng = loadImage("static/img/cloudspng.png");
+  starspng = loadImage("static/img/starspng.png");
+  bg_gradient = loadImage("static/img/bg-gradient.png");
   
   size(width, height); // or whatever res our phone is
   noStroke();
@@ -64,7 +64,7 @@ void setup() {
   } else if(hr >= 16 && hr < 19) { //dusk
     background(255,104,10);
   } else if(hr >= 19 || hr < 7) { //nighttime
-    background(46,95,132);            //why is night laggy?
+    background(46,95,132); 
   }
 }
 
