@@ -42,7 +42,7 @@ boolean sketchFullScreen() {
 
 void setup() {
   width = 1400;
-  height = 900;
+  height = 800;
   frameRate(50);
 
   p1 = loadImage("static/img/p1.png");
