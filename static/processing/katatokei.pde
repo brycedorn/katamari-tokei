@@ -22,6 +22,8 @@ TODO:
 //
 // constants
 // ------------------------------------------------------------
+int width = 1450, height = 800;
+
 int SEC_IN_MIN = 60,
     MIN_IN_HR = 60,
     HR_IN_DAY = 24;
@@ -35,30 +37,23 @@ int princeFrames; //for prince animation
 
 // SETUP
 // ================================================================================
-
-boolean sketchFullScreen() {
-  return true;
-}
-
 void setup() {
-  width = 1450;
-  height = 800;
-  frameRate(50);
+  frameRate(40);
 
-  p1 = loadImage("static/img/p1.png");
-  p2 = loadImage("static/img/p2.png");
-  p3 = loadImage("static/img/p3.png");
-  p4 = loadImage("static/img/p4.png");
-  p5 = loadImage("static/img/p5.png");
-  p6 = loadImage("static/img/p6.png");
-  ball = loadImage("static/img/blur.png");
-  grass = loadImage("static/img/grass.png");
-  cloudspng = loadImage("static/img/cloudspng.png");
-  starspng = loadImage("static/img/starspng.png");
-  bg_gradient = loadImage("static/img/bg-gradient.png");
+  p1 = loadImage("p1.png");
+  p2 = loadImage("p2.png");
+  p3 = loadImage("p3.png");
+  p4 = loadImage("p4.png");
+  p5 = loadImage("p5.png");
+  p6 = loadImage("p6.png");
+  ball = loadImage("blur.png");
+  grass = loadImage("grass.png");
+  cloudspng = loadImage("cloudspng.png");
+  starspng = loadImage("starspng.png");
+  bg_gradient = loadImage("bg-gradient.png");
   
+  size(width, height); // or whatever res our phone is
   noStroke();
-  size(width,height);
   
   int hr = hour();
   
@@ -101,7 +96,7 @@ void draw() {
   }
   
   // write text in bg
-  font = loadFont("HelveticaNeue-Bold-48.vlw");
+  font = loadFont("Ming-Imperial-48.vlw");
   fill(255, 255, 255, 100);
   int hrdisp = hr%12;
   if(hrdisp>9) {
@@ -168,7 +163,6 @@ void drawEnvironment(int hr) {
   if(sunrays) { //rotating sun rays
     //eh, do later
   }
-  /*
   if(clouds) { //rotating clouds
     pushMatrix();
     translate(width/2,1200);
@@ -180,7 +174,6 @@ void drawEnvironment(int hr) {
     tint(255, 255);
     popMatrix();
   }
-
   if(smclouds) { //less-visible clouds
     pushMatrix();
     translate(width/2,1200);
@@ -192,7 +185,6 @@ void drawEnvironment(int hr) {
     tint(255, 255);
     popMatrix();
   }
-
   if(starry) { //rotating stars
     pushMatrix();
     translate(width/2,800);
@@ -205,7 +197,6 @@ void drawEnvironment(int hr) {
     popMatrix();
     //add moon?
   }
-  */
 }
 
 // Ground
@@ -288,7 +279,7 @@ void drawPrince(float mil, float relSec) {
     prince,
     width*.21+ball.width/(change+80)+2.2*t,
     height*.7+3*change/(relSec+1)+t/10,
-    180*.6-relSec*.3,
+    180*.6-relSec*.8,
     253*.6-relSec*180/253*.8
   );
   }
@@ -297,7 +288,7 @@ void drawPrince(float mil, float relSec) {
     prince,
     width*.21+ball.width/(change+80),
     height*.7+3*change/(relSec+1),
-    180*.6-relSec*.3,
+    180*.6-relSec*.8,
     253*.6-relSec*180/253*.8
   );
   }
