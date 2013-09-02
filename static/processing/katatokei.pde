@@ -1,3 +1,4 @@
+
 /*
 TODO:
 
@@ -35,10 +36,15 @@ int princeFrames; //for prince animation
 
 // SETUP
 // ================================================================================
+
+boolean sketchFullScreen() {
+  return true;
+}
+
 void setup() {
-  int width = 1450;
-  int height = 800;
-  frameRate(60);
+  width = 1450;
+  height = 800;
+  frameRate(50);
 
   p1 = loadImage("static/img/p1.png");
   p2 = loadImage("static/img/p2.png");
@@ -49,11 +55,11 @@ void setup() {
   ball = loadImage("static/img/blur.png");
   grass = loadImage("static/img/grass.png");
   //cloudspng = loadImage("static/img/cloudspng.png");
-  starspng = loadImage("static/img/starspng.png");
+  //starspng = loadImage("static/img/starspng.png");
   bg_gradient = loadImage("static/img/bg-gradient.png");
   
-  size(width, height); // or whatever res our phone is
   noStroke();
+  size(width,height);
   
   int hr = hour();
   
@@ -96,7 +102,7 @@ void draw() {
   }
   
   // write text in bg
-  font = loadFont("Ming-Imperial-48.vlw");
+  font = loadFont("HelveticaNeue-Bold-48.vlw");
   fill(255, 255, 255, 100);
   int hrdisp = hr%12;
   if(hrdisp>9) {
@@ -163,6 +169,7 @@ void drawEnvironment(int hr) {
   if(sunrays) { //rotating sun rays
     //eh, do later
   }
+  /*
   if(clouds) { //rotating clouds
     pushMatrix();
     translate(width/2,1200);
@@ -174,6 +181,7 @@ void drawEnvironment(int hr) {
     tint(255, 255);
     popMatrix();
   }
+
   if(smclouds) { //less-visible clouds
     pushMatrix();
     translate(width/2,1200);
@@ -185,6 +193,7 @@ void drawEnvironment(int hr) {
     tint(255, 255);
     popMatrix();
   }
+
   if(starry) { //rotating stars
     pushMatrix();
     translate(width/2,800);
@@ -197,6 +206,7 @@ void drawEnvironment(int hr) {
     popMatrix();
     //add moon?
   }
+  */
 }
 
 // Ground
@@ -279,7 +289,7 @@ void drawPrince(float mil, float relSec) {
     prince,
     width*.21+ball.width/(change+80)+2.2*t,
     height*.7+3*change/(relSec+1)+t/10,
-    180*.6-relSec*.8,
+    180*.6-relSec*.3,
     253*.6-relSec*180/253*.8
   );
   }
@@ -288,7 +298,7 @@ void drawPrince(float mil, float relSec) {
     prince,
     width*.21+ball.width/(change+80),
     height*.7+3*change/(relSec+1),
-    180*.6-relSec*.8,
+    180*.6-relSec*.3,
     253*.6-relSec*180/253*.8
   );
   }
