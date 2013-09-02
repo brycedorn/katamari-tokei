@@ -36,8 +36,15 @@ int princeFrames; //for prince animation
 // SETUP
 // ================================================================================
 void setup() {
-  int width = 1450;
-  int height = 800;
+  int w = int(param("width")); 
+  if (w <= 0) {
+    w = 100;
+  }
+  int h = int(param("height"));
+  if (h <= 0) {
+    h = 100;
+  }
+  size(w,h);
   frameRate(60);
 
   p1 = loadImage("static/img/p1.png");
@@ -48,11 +55,9 @@ void setup() {
   p6 = loadImage("static/img/p6.png");
   ball = loadImage("static/img/blur.png");
   grass = loadImage("static/img/grass.png");
-  //cloudspng = loadImage("static/img/cloudspng.png");
   starspng = loadImage("static/img/starspng.png");
   bg_gradient = loadImage("static/img/bg-gradient.png");
   
-  size(width, height); // or whatever res our phone is
   noStroke();
   
   int hr = hour();
