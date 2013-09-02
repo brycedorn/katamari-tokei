@@ -36,6 +36,7 @@ int princeFrames; //for prince animation
 // SETUP
 // ================================================================================
 void setup() {
+  size(600,600);
   frameRate(60);
 
   p1 = loadImage("static/img/p1.png");
