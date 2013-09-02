@@ -69,7 +69,7 @@ void setup() {
   } else if(hr >= 16 && hr < 19) { //dusk
     background(255,104,10);
   } else if(hr >= 19 || hr < 7) { //nighttime
-    background(46,95,132);            //why is night laggy?
+    background(46,95,132); //why is night laggy?
   }
 }
 
