@@ -36,7 +36,8 @@ int princeFrames; //for prince animation
 // SETUP
 // ================================================================================
 void setup() {
-  size(600,600);
+  int width = 1450;
+  int height = 800;
   frameRate(60);
 
   p1 = loadImage("static/img/p1.png");
@@ -47,9 +48,11 @@ void setup() {
   p6 = loadImage("static/img/p6.png");
   ball = loadImage("static/img/blur.png");
   grass = loadImage("static/img/grass.png");
+  //cloudspng = loadImage("static/img/cloudspng.png");
   starspng = loadImage("static/img/starspng.png");
   bg_gradient = loadImage("static/img/bg-gradient.png");
   
+  size(width, height); // or whatever res our phone is
   noStroke();
   
   int hr = hour();
@@ -61,12 +64,10 @@ void setup() {
   } else if(hr >= 16 && hr < 19) { //dusk
     background(255,104,10);
   } else if(hr >= 19 || hr < 7) { //nighttime
-    background(46,95,132); //why is night laggy?
+    background(46,95,132);            //why is night laggy?
   }
 }
-boolean sketchFullScreen() {
-  return true;
-}
+
 
 // DRAW
 // ================================================================================
