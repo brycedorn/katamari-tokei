@@ -33,6 +33,8 @@ PImage ball, grass, cloudspng, starspng, bg_gradient;
 PImage p1,p2,p3,p4,p5,p6;
 PFont font;
 int princeFrames; //for prince animation
+float oldWidth;
+float oldHeight;
 
 // SETUP
 // ================================================================================
@@ -42,16 +44,11 @@ boolean sketchFullScreen() {
 }
 
 void setup() {
-  int w = int(param("width")); 
-  // int() will return 0 if param("width") doesn't exist
-  if (w <= 0) {
-    w = 100;
-  }
-  int h = int(param("height"));
-  if (h <= 0) {
-    h = 100;
-  }
-  size(w,h);
+  frame.setResizable(true);
+  size(width,height);
+  oldWidth = width;
+  oldHeight = height;
+  
   frameRate(50);
 
   p1 = loadImage("static/img/p1.png");
@@ -85,6 +82,19 @@ void setup() {
 // DRAW
 // ================================================================================
 void draw() {  
+  if(width != oldWidth || height != oldHeight) {
+    //Width and/or height has changed since the last frame.
+    //Call object methods to reposition/resize them, as desired.
+    objectName1.recalcPositionAndSize();
+    objectName2.recalcPositionAndSize();
+    objectName3.recalcPosition();
+    objectName4.recalcPosition();
+ 
+    //Update values
+    oldWidth = width;
+    oldHeight = height;  //Update oldHeight
+  }
+
   // current time
   // modulus'd for testing purposes, if we want smaller values
   int hr = hour() % HR_IN_DAY;
