@@ -1,3 +1,23 @@
+/*
+TODO:
+
+--Fixes--
+
+ - make large pngs into slices
+   - clouds, stars, grass
+   - only visible above horizontal axis
+ - make sure milliseconds is consistent
+ - fix on/off animation
+
+--Webpage--
+
+ - resize elements to be more appropriate for web page
+    - probably change minutes at top to be either 30 or 60 across
+ - javascript alert that gives details about clock / what it's doing
+ - git icon in bottom right
+
+ */
+
 // GLOBAL VARS
 //
 // constants
@@ -16,8 +36,8 @@ int princeFrames; //for prince animation
 // SETUP
 // ================================================================================
 void setup() {
-  width = 600;
-  height = 800;
+  int width = 1450;
+  int height = 800;
   frameRate(60);
 
   p1 = loadImage("static/img/p1.png");
@@ -28,11 +48,11 @@ void setup() {
   p6 = loadImage("static/img/p6.png");
   ball = loadImage("static/img/blur.png");
   grass = loadImage("static/img/grass.png");
-  cloudspng = loadImage("static/img/cloudspng.png");
+  //cloudspng = loadImage("static/img/cloudspng.png");
   starspng = loadImage("static/img/starspng.png");
   bg_gradient = loadImage("static/img/bg-gradient.png");
   
-  size(600, 800); // or whatever res our phone is
+  size(width, height); // or whatever res our phone is
   noStroke();
   
   int hr = hour();
