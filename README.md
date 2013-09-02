@@ -1,15 +1,13 @@
-Example web implementation of the Katatokei processing sketch.
+katamari-tokei
+==============
 
-About Processingjs
-------------------
-Processingjs is used to display the processing sketch in a canvas, and
-has certain differences / limitations.  See
-[http://processingjs.org/](http://processingjs.org/) for more info.
+###### A clock design inspired by Katamari Damacy
 
-The most common error is to resuse variable names, by naming a variable
-and a function the same thing (including built-in processing functions).
+![current](<http://i.imgur.com/2305hr5.png>)
 
-Updates
--------
-Copy new `katatokei.pde` file to `static/processing/`.  Copy all images to
-`static/img/` and change all of its image links to `static/img/MYNAME.png`.
+About Processingjs ------------------ Processingjs is used to display the
+processing sketch in a canvas, and has certain differences / limitations.  See
+[http://processingjs.org/](<http://processingjs.org/>) for more info.
+
+The most common error is to resuse variable names, by naming a variable and a
+function the same thing (including built-in processing functions).
