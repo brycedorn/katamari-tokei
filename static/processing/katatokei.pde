@@ -36,15 +36,8 @@ int princeFrames; //for prince animation
 // SETUP
 // ================================================================================
 void setup() {
-  int w = int(param("width")); 
-  if (w <= 0) {
-    w = 100;
-  }
-  int h = int(param("height"));
-  if (h <= 0) {
-    h = 100;
-  }
-  size(w,h);
+  size(displayWidth, displayHeight);
+
   frameRate(60);
 
   p1 = loadImage("static/img/p1.png");
@@ -72,7 +65,9 @@ void setup() {
     background(46,95,132); //why is night laggy?
   }
 }
-
+boolean sketchFullScreen() {
+  return true;
+}
 
 // DRAW
 // ================================================================================
