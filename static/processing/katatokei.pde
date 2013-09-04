@@ -44,10 +44,10 @@ boolean sketchFullScreen() {
 }
 
 void setup() {
-  frame.setResizable(true);
-  size(width,height);
-  oldWidth = width;
-  oldHeight = height;
+  oldWidth = window.innerWidth;
+  oldHeight = window.innerHeight;
+
+  size(window.innerWidth,window.innerHeight);
   
   frameRate(50);
 
@@ -82,19 +82,6 @@ void setup() {
 // DRAW
 // ================================================================================
 void draw() {  
-  if(width != oldWidth || height != oldHeight) {
-    //Width and/or height has changed since the last frame.
-    //Call object methods to reposition/resize them, as desired.
-    objectName1.recalcPositionAndSize();
-    objectName2.recalcPositionAndSize();
-    objectName3.recalcPosition();
-    objectName4.recalcPosition();
- 
-    //Update values
-    oldWidth = width;
-    oldHeight = height;  //Update oldHeight
-  }
-
   // current time
   // modulus'd for testing purposes, if we want smaller values
   int hr = hour() % HR_IN_DAY;
