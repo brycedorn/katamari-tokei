@@ -15,6 +15,7 @@ void setup() {
   size(window.innerWidth,window.innerHeight);
   
   frameRate(50);
+  noStroke();
 
   p1 = loadImage("static/img/p1.png");
   p2 = loadImage("static/img/p2.png");
