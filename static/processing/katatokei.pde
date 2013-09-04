@@ -25,7 +25,7 @@ void setup() {
 
   ball = loadImage("static/img/blur.png");
   grass = loadImage("static/img/grass.png");
-  //cloudspng = loadImage("static/img/cloudspng.png");
+  //cloudspng = loadImage("static/img/cloudms.png");
   //starspng = loadImage("static/img/starspng.png");
   bg_gradient = loadImage("static/img/bg-gradient.png");
 
@@ -132,9 +132,6 @@ void drawEnvironment(int hr) {
     translate(-width/2, -800); //center coords (-)
     popMatrix();
   }
-  if(sunrays) { //rotating sun rays
-    //eh, do later
-  }
   /*
   if(clouds) { //rotating clouds
     pushMatrix();
@@ -147,7 +144,6 @@ void drawEnvironment(int hr) {
     tint(255, 255);
     popMatrix();
   }
-
   if(smclouds) { //less-visible clouds
     pushMatrix();
     translate(width/2,1200);
@@ -159,7 +155,6 @@ void drawEnvironment(int hr) {
     tint(255, 255);
     popMatrix();
   }
-
   if(starry) { //rotating stars
     pushMatrix();
     translate(width/2,800);
@@ -262,7 +257,7 @@ void drawPrince(float mil, float relSec) {
   else {
     image(
     prince,
-    width*.21+ball.width/(change+80),
+    width*.35+ball.width/(change+400),
     height*.7+3*change/(relSec+1),
     180*.6-relSec*.3,
     253*.6-relSec*180/253*.8
