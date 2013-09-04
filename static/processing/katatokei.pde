@@ -1,33 +1,4 @@
-
-/*
-TODO:
-
---Fixes--
-
- - make large pngs into slices
-   - clouds, stars, grass
-   - only visible above horizontal axis
- - make sure milliseconds is consistent
- - fix on/off animation
-
---Webpage--
-
- - resize elements to be more appropriate for web page
-    - probably change minutes at top to be either 30 or 60 across
- - javascript alert that gives details about clock / what it's doing
- - git icon in bottom right
-
- */
-
 // GLOBAL VARS
-//
-// constants
-// ------------------------------------------------------------
-int SEC_IN_MIN = 60,
-    MIN_IN_HR = 60,
-    HR_IN_DAY = 24;
-
-// not constants
 // ------------------------------------------------------------
 PImage ball, grass, cloudspng, starspng, bg_gradient;
 PImage p1,p2,p3,p4,p5,p6;
@@ -38,15 +9,9 @@ float oldHeight;
 
 // SETUP
 // ================================================================================
-
-boolean sketchFullScreen() {
-  return true;
-}
-
 void setup() {
   oldWidth = window.innerWidth;
   oldHeight = window.innerHeight;
-
   size(window.innerWidth,window.innerHeight);
   
   frameRate(50);
@@ -57,16 +22,14 @@ void setup() {
   p4 = loadImage("static/img/p4.png");
   p5 = loadImage("static/img/p5.png");
   p6 = loadImage("static/img/p6.png");
+
   ball = loadImage("static/img/blur.png");
   grass = loadImage("static/img/grass.png");
   //cloudspng = loadImage("static/img/cloudspng.png");
   //starspng = loadImage("static/img/starspng.png");
   bg_gradient = loadImage("static/img/bg-gradient.png");
-  
-  noStroke();
-  
+
   int hr = hour();
-  
   if(hr >= 7 && hr < 10) { //morning
     background(188,222,255);
   } else if(hr >= 10 && hr < 16) { //day
@@ -74,7 +37,7 @@ void setup() {
   } else if(hr >= 16 && hr < 19) { //dusk
     background(255,104,10);
   } else if(hr >= 19 || hr < 7) { //nighttime
-    background(46,95,132);            //why is night laggy?
+    background(46,95,132);
   }
 }
 
@@ -82,13 +45,9 @@ void setup() {
 // DRAW
 // ================================================================================
 void draw() {  
-  // current time
-  // modulus'd for testing purposes, if we want smaller values
-  int hr = hour() % HR_IN_DAY;
-  int min = minute() % MIN_IN_HR;
-  int sec = second() % SEC_IN_MIN;
-  
-  // time since program start
+  int hr = hour();
+  int min = minute();
+  int sec = second();
   float mil = millis();
   float relSec = second();
   
@@ -160,6 +119,9 @@ void drawEnvironment(int hr) {
   }
   
   // apply effects
+  // 
+  // TODO: clean this up into separate functions
+  // 
   if(sun) { //rotating sun
     pushMatrix();
     translate(width/2,800); //center coords (+)
