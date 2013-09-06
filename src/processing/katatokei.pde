@@ -29,6 +29,7 @@ void setup() {
   stars = loadImage("src/img/stars.png");
   rayz = loadImage("src/img/rays.png");
   cloudz = loadImage("src/img/clouds.png");
+  cloudztran = loadImage("src/img/cloudstran.png");
   bg_gradient = loadImage("src/img/bg-gradient.png");
   bg_gradient_w = loadImage("src/img/bg-gradient-w.png");
 
@@ -95,7 +96,7 @@ void draw() {
 // Environment Effects
 // ------------------------------------------------------------
 void drawEnvironment(int hr) {
-  boolean clouds=false, sun=false, rays=false, starry=false;
+  boolean clouds=false, miniclouds=false; sun=false, rays=false, starry=false;
 
   // determine effects
   if(hr >= 7 && hr < 10) { //morning
@@ -107,17 +108,17 @@ void drawEnvironment(int hr) {
   } else if(hr >= 10 && hr < 16) { //day
     sun = true;
     clouds = true;
-    sunrays = false;
     starry = false;
     rays = false;
   } else if(hr >= 16 && hr < 19) { //dusk
     clouds = false;
+    miniclouds = true;
     sun = false;
     starry = false;
     rays = true;
   } else if(hr >= 19 || hr < 7) { // night
     clouds = false;
-    sunrays = false;
+    miniclouds = true;
     sun = false;
     starry = true;
     rays = false;
@@ -145,7 +146,7 @@ void drawEnvironment(int hr) {
     image(cloudz,0,0,width*3.2,width*3.2);
     popMatrix();
   }
-  if(starry) { //rotating clouds
+  if(starry) { //rotating stars
     pushMatrix();
     translate(width/2,height); //center coords (+)
     rotate(-frameCount*radians(90)/1200);
@@ -153,12 +154,20 @@ void drawEnvironment(int hr) {
     image(stars,0,0,width*2,width*2);
     popMatrix();
   }
-  if(rays) { //rotating clouds
+  if(rays) { //rotating sun rays
     pushMatrix();
     translate(width/2,height*1.3); //center coords (+)
     rotate(-frameCount*radians(90)/1000);
     translate(-width,-width); //radius
     image(rayz,0,0,width*2,width*2);
+    popMatrix();
+  }
+  if(miniclouds) { //rotating transparent clouds
+    pushMatrix();
+    translate(width/2,height*1.5); //center coords (+)
+    rotate(-frameCount*radians(90)/500);
+    translate(-width*1.6,-width*1.6); //radius
+    image(cloudztran,0,0,width*3.2,width*3.2);
     popMatrix();
   }
 }
