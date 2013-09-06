@@ -1,3 +1,5 @@
 *{margin:0;}
-#like{position:absolute;right:0;bottom:0;z-index:100;padding:20px;}
+#like{position:absolute;right:0;bottom:0;z-index:100;padding:20px;opacity:0.4;}
 #clock{position:absolute;top:0;z-index:10;}
+#suggest{font-family:Georgia;font-size:20px;position:absolute;bottom:0;left:0;z-index: 100;padding:20px;text-decoration:none;color:#fff;opacity:0.4;}
+#like:hover,#suggest:hover{opacity:1;}
