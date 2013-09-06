@@ -144,8 +144,7 @@ void drawEnvironment(int hr) {
     translate(width/2,height); //center coords (+)
     rotate(-frameCount*radians(90)/500);
     translate(-width,-width); //radius
-    image(clouds,0,0,width*2,width*2);
-    console.log(clouds);
+    image(stars,0,0,width*2,width*2);
     popMatrix();
   }
   if(starry) { //rotating clouds
