@@ -1,6 +1,6 @@
 // GLOBAL VARS
 // ------------------------------------------------------------
-PImage ball, grass, cloudspng, starspng, bg_gradient;
+PImage ball, grass, bg_gradient;
 PImage p1,p2,p3,p4,p5,p6;
 PFont font;
 int princeFrames; //for prince animation
@@ -17,18 +17,16 @@ void setup() {
   frameRate(50);
   noStroke();
 
-  p1 = loadImage("static/img/p1.png");
-  p2 = loadImage("static/img/p2.png");
-  p3 = loadImage("static/img/p3.png");
-  p4 = loadImage("static/img/p4.png");
-  p5 = loadImage("static/img/p5.png");
-  p6 = loadImage("static/img/p6.png");
+  p1 = loadImage("src/img/p1.png");
+  p2 = loadImage("src/img/p2.png");
+  p3 = loadImage("src/img/p3.png");
+  p4 = loadImage("src/img/p4.png");
+  p5 = loadImage("src/img/p5.png");
+  p6 = loadImage("src/img/p6.png");
 
-  ball = loadImage("static/img/blur.png");
-  grass = loadImage("static/img/grass.png");
-  //cloudspng = loadImage("static/img/cloudms.png");
-  //starspng = loadImage("static/img/starspng.png");
-  bg_gradient = loadImage("static/img/bg-gradient.png");
+  ball = loadImage("src/img/blur.png");
+  grass = loadImage("src/img/grass.png");
+  bg_gradient = loadImage("src/img/bg-gradient.png");
 
   int hr = hour();
   if(hr >= 7 && hr < 10) { //morning
