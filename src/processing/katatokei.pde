@@ -240,7 +240,6 @@ int princeOnCount = 0;
 int princeOffCount = 0;
 double onAngle = 0;
 double offAngle = 0;
-double princeAngle = 0;
 double xDist = 0;
 double yDist = 0;
 void drawPrince(float mil, float relSec) {
@@ -253,6 +252,9 @@ void drawPrince(float mil, float relSec) {
   float rollTime = (width/2)/rollSpeed;
   float princeWidth = 180*.6-relSec*.8;
   float princeHeight = 253*.6-relSec*180/253*.8;
+  double numFrame = ((ballDiameter-160)/6)*50;
+  double princeDegChange = 45/(59-2*rollTime)/50;
+  double princeAngle = radians(princeDegChange*numFrame);
   PImage prince = p1;
   
   float numFrames = 1;
@@ -267,7 +269,6 @@ void drawPrince(float mil, float relSec) {
   
   float change = 6*relSec/2;
   double degChange = 90/rollTime/frameRate;
-  double princeDegChange = 45/(59-2*rollTime)/50;
   if(relSec<rollTime) {
     offAngle = 0;
     onAngle = radians(degrees(onAngle)+degChange);
