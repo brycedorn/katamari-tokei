@@ -75,6 +75,9 @@ void draw() {
     text(hrdisp, width/2, height-100);
   }
   else {
+    if(hrdisp==0) {
+      hrdisp = 12;
+    }
     textFont(font, 850);
     textAlign(CENTER);
     text(hrdisp, width/2, height-100);
@@ -125,12 +128,12 @@ void drawEnvironment(int hr) {
   // 
   if(sun) { //rotating sun
     pushMatrix();
-    translate(width/2,800); //center coords (+)
-    rotate(-frameCount*radians(90)/1000);
-    translate(-400,-400); //radius
+    translate(width/2,width*1.43); //center coords (+)
+    rotate(-frameCount*radians(90)/500);
+    translate(-width/4,-width*1.3); //radius
     fill(255,220,0);
     ellipse(0,0,100,100); //make sure it's at 0,0
-    translate(-width/2, -800); //center coords (-)
+    translate(-width/2, -width*1.43); //center coords (-)
     popMatrix();
   }
   /*
@@ -175,55 +178,98 @@ void drawEnvironment(int hr) {
 // ------------------------------------------------------------
 void drawGrass(float relSec) {
   pushMatrix();
-  translate(width/2,1450);
+  translate(width/2,width*1.43);
   if(relSec>=2 && relSec <58)
     rotate(-frameCount*radians(90)/100);
   else 
-    rotate(-frameCount*radians(90)/1000); //frame of reference, should make more fluid tho
-  translate(-800,-800);
-  image(grass,0,0,1600,1600);
-  translate(-width*.43, -height*.7);
+    rotate(-frameCount*radians(90)/100); //frame of reference, should make more fluid tho
+  translate(-width, -width);
+  image(grass,0,0,width*2,width*2);
+  //translate(-width*.43,-height*.7);
   popMatrix();
 }
 
 // Ball
 // ------------------------------------------------------------
-float t = 10.0;
-float p = 500.0;
+double onAngleBall = 0;
+double offAngleBall = 0;
+double prevDiam = 0;
+double prevChange = 0;
+int onCount = 0;
+int offCount = 0;
 void drawBall(float relSec) {
+  float growFactor = 6*relSec;
+  float change = growFactor/2;
+  float ballDiameter = 160+growFactor;
+  float rotAngle = radians(90)/100;
+  float rotDistance = ballDiameter-ballDiameter*Math.sin(90-rotAngle);
+  float rollSpeed = frameRate*rotDistance;
+  float rollTime = (width/2)/rollSpeed;
+  double degChange = 45/rollTime/frameRate;
   pushMatrix();
-  float change = 6*relSec/2;
-  if(relSec<2) {
-    t=0;
-    translate(-p*1.75,height-(height*.1+80+change));
-    p = p-5.95;
-    rotate(frameCount*radians(90)/10);
-    translate(-80-change, -80-change);
-    image(ball, 0, 0, 160+6*relSec, 160+6*relSec);
-    translate(-(width*.5-80), -height*.9);
-  }   
-  else if(relSec>=2 && relSec<58) {
-    p=0;
-    translate(width*.5,height-(height*.1+80+change));
-    rotate(frameCount*radians(90)/10);
-    translate(-80-change, -80-change);
-    image(ball, 0, 0, 160+6*relSec, 160+6*relSec);
-    translate(-(width*.5-80), -height*.9);
+  if(relSec<rollTime) {
+    offCount = 0;
+    offAngleBall=0;
+    onAngleBall = radians(degrees(onAngleBall)+90/rollTime/frameRate);
+    double side = Math.sqrt(2*width*width-2*width*width*Math.cos(onAngleBall));
+    double theta = Math.asin(width*Math.sin(onAngleBall)/side);
+    double phi = 90-degrees(theta);
+    phi = radians(phi);
+    double xTranslate = side*Math.sin(phi);
+    double yTranslate = side*Math.sin(theta);
+    translate(-width/2+xTranslate-ballDiameter/2,width*1.5-yTranslate-ballDiameter/2);
+    rotate(onCount*rotAngle);
+    translate(-ballDiameter/2, -ballDiameter/2);
+    image(ball, 0, 0, ballDiameter, ballDiameter);
+    //translate(-(width*.5-80), -height*.9);
   }
-  else if(relSec>=58){
-    translate(width*.5+3*t,height-(height*.1+80+change)+t/10);
-    t+=10;
-    rotate(frameCount*radians(90)/10);
-    translate(-80-change, -80-change);
-    image(ball, 0, 0, 160+6*relSec, 160+6*relSec);
-    translate(-(width*.5-80), -height*.9);
+  else if(relSec>=rollTime && relSec<(59-rollTime)) {
+    onCount = 0;
+    onAngleBall=0;
+    translate(width/2,width*1.43-width-change);
+    rotate(frameCount*radians(90)/40);
+    translate(-ballDiameter/2, -ballDiameter/2);
+    image(ball, 0, 0, ballDiameter, ballDiameter);
+    //translate(-width/2+ballDiameter/2, -height*.9);
+    prevDiam = ballDiameter;
+    prevChange = change;
+  }
+  else if(relSec>=(59-rollTime)){
+    offAngleBall = radians(degrees(offAngleBall)+degChange);
+    double side = Math.sqrt(2*width*width-2*width*width*Math.cos(offAngleBall));
+    double theta = Math.asin(width*Math.sin(offAngleBall)/side);
+    double phi = 90-degrees(theta);
+    phi = radians(phi);
+    double xTranslate = side*Math.sin(theta);
+    double yTranslate = side*Math.sin(phi);
+    translate(width/2,width*1.43-width-change);
+    rotate(offCount*rotAngle);
+    translate(-prevDiam/2+xTranslate, yTranslate-prevDiam/2);
+    image(ball, 0, 0, ballDiameter, ballDiameter);
+    //translate(-(width*.5-80), -height*.9);
   }
   popMatrix();
 }
 
 // Prince
 // ------------------------------------------------------------
+int princeOnCount = 0;
+int princeOffCount = 0;
+double onAngle = 0;
+double offAngle = 0;
+double princeAngle = 0;
+double xDist = 0;
+double yDist = 0;
 void drawPrince(float mil, float relSec) {
+  float growFactor = 6*relSec;
+  float change = growFactor/2;
+  float ballDiameter = 160+growFactor;
+  float rotAngle = radians(90)/100;
+  float rotDistance = ballDiameter-ballDiameter*Math.sin(90-rotAngle);
+  float rollSpeed = frameRate*rotDistance;
+  float rollTime = (width/2)/rollSpeed;
+  float princeWidth = 180*.6-relSec*.8;
+  float princeHeight = 253*.6-relSec*180/253*.8;
   PImage prince = p1;
   
   float numFrames = 1;
@@ -237,32 +283,60 @@ void drawPrince(float mil, float relSec) {
   if(princeFrames>numFrames*6) princeFrames=0;
   
   float change = 6*relSec/2;
-  if(relSec<2) {
+  double degChange = 90/rollTime/frameRate;
+  double princeDegChange = 45/(59-2*rollTime)/50;
+  if(relSec<rollTime) {
+    offAngle = 0;
+    onAngle = radians(degrees(onAngle)+degChange);
+    double side = Math.sqrt(2*width*width-2*width*width*Math.cos(onAngle));
+    double theta = Math.asin(width*Math.sin(onAngle)/side);
+    double phi = radians(90-degrees(theta));
+    double xTranslate = side*Math.sin(phi);
+    double yTranslate = side*Math.sin(theta);
     image(
-    prince,
-    -p*1.75-180,
-    height*.7+2*change/(relSec+1),
-    180*.6-relSec*.8,
-    253*.6-relSec*180/253*.8
-  );
+      prince,
+      -width/2+xTranslate-ballDiameter/2-princeWidth*.7,
+      width*1.43-yTranslate-ballDiameter/2+princeHeight*.4,
+      princeWidth,
+      princeHeight
+    );
   }
-  else if(relSec>=58) {
+  else if(relSec>=(59-rollTime)) {
+    princeAngle = 0;
+    offAngle = radians(degrees(offAngle)+degChange);
+    double side = Math.sqrt(2*width*width-2*width*width*Math.cos(offAngle));
+    double theta = Math.asin(width*Math.sin(offAngle)/side);
+    double phi = 90-degrees(theta);
+    phi = radians(phi);
+    double yTranslate = side*Math.sin(phi);
+    double xTranslate = side*Math.sin(theta);
     image(
-    prince,
-    width*.21+ball.width/(change+80)+2.2*t,
-    height*.7+3*change/(relSec+1)+t/10,
-    180*.6-relSec*.3,
-    253*.6-relSec*180/253*.8
-  );
+      prince,
+      width/2+xTranslate-ballDiameter/2-princeWidth*.7,
+      width*1.43-width-ballDiameter/2+yTranslate+princeHeight*.4,
+      180*.6-relSec*.3,
+      253*.6-relSec*180/253*.8
+    );
   }
   else {
+    double radius = ballDiameter/2;
+    onAngle = 0;
+    princeAngle = radians(degrees(princeAngle)+princeDegChange);
+    //console.log("princeAngle is", princeAngle);
+    double side = Math.sqrt(2*radius*radius-2*radius*radius*Math.cos(princeAngle));
+    double theta = Math.asin(radius*Math.sin(princeAngle)/side);
+    double phi = 90-degrees(theta);
+    phi = radians(phi);
+    double xTranslate = side*Math.sin(phi);
+    double yTranslate = side*Math.sin(theta);
+    //console.log("radius is", radius);
     image(
-    prince,
-    width*.35+ball.width/(change+400),
-    height*.7+3*change/(relSec+1),
-    180*.6-relSec*.3,
-    253*.6-relSec*180/253*.8
-  );
+      prince,
+      width/2-radius+xTranslate-princeWidth*.7,
+      width*1.43-width-radius+yTranslate+princeHeight*.4,
+      180*.6-relSec*.3,
+      253*.6-relSec*180/253*.8
+    );
   }
 }
 
@@ -277,6 +351,8 @@ void drawMins(int minutes) {
       col = 0;
     }
     fill(255,255,255);
-    ellipse(15+30*col,15+30*(row-1),10,10);
+    //ellipse(15+30*col,15+30*(row-1),10,10);
+    textSize(10);
+    text(m+1,15+30*col,15+30*(row-1));
   }
 }
