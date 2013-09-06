@@ -26,8 +26,8 @@ void setup() {
 
   ball = loadImage("src/img/blur.png");
   grass = loadImage("src/img/grass.png");
-  clouds = loadImage("src/img/cloudz.png");
   stars = loadImage("src/img/stars.png");
+  cloudz = loadImage("src/img/clouds.png");
   bg_gradient = loadImage("src/img/bg-gradient.png");
   bg_gradient_w = loadImage("src/img/bg-gradient-w.png");
 
@@ -49,9 +49,8 @@ void setup() {
 void draw() {  
   int hr = hour();
   int min = minute();
-  int sec = second();
   float mil = millis();
-  float relSec = second();
+  float sec = second();
   
   // overlay bg
   if(hr >= 7 && hr < 10) { //morning
@@ -87,9 +86,9 @@ void draw() {
   }
   
   drawEnvironment(hr);
-  drawGrass(relSec);
-  drawBall(relSec);
-  drawPrince(mil, relSec);
+  drawGrass(sec);
+  drawBall(sec);
+  drawPrince(mil, sec);
   drawMins(min);
 }
 
@@ -132,7 +131,7 @@ void drawEnvironment(int hr) {
   if(sun) { //rotating sun
     pushMatrix();
     translate(width/2,width*1.43); //center coords (+)
-    rotate(-frameCount*radians(90)/500);
+    rotate(-frameCount*radians(90)/2500);
     translate(-width/4,-width*1.3); //radius
     fill(255,220,0);
     ellipse(0,0,100,100); //make sure it's at 0,0
@@ -143,8 +142,8 @@ void drawEnvironment(int hr) {
     pushMatrix();
     translate(width/2,height); //center coords (+)
     rotate(-frameCount*radians(90)/500);
-    translate(-width,-width); //radius
-    image(stars,0,0,width*2,width*2);
+    translate(-width*1.25,-width*1.25); //radius
+    image(cloudz,0,0,width*2.5,width*2.5);
     popMatrix();
   }
   if(starry) { //rotating clouds
@@ -159,10 +158,10 @@ void drawEnvironment(int hr) {
 
 // Ground
 // ------------------------------------------------------------
-void drawGrass(float relSec) {
+void drawGrass(float sec) {
   pushMatrix();
   translate(width/2,width*1.43);
-  if(relSec>=2 && relSec <58)
+  if(sec>=2 && sec <58)
     rotate(-frameCount*radians(90)/100);
   else 
     rotate(-frameCount*radians(90)/100); //frame of reference, should make more fluid tho
@@ -179,8 +178,8 @@ double prevDiam = 0;
 double prevChange = 0;
 int onCount = 0;
 int offCount = 0;
-void drawBall(float relSec) {
-  float growFactor = 6*relSec;
+void drawBall(float sec) {
+  float growFactor = 6*sec;
   float change = growFactor/2;
   float ballDiameter = 160+growFactor;
   float rotAngle = radians(90)/100;
@@ -189,7 +188,7 @@ void drawBall(float relSec) {
   float rollTime = (width/2)/rollSpeed;
   double degChange = 45/rollTime/frameRate;
   pushMatrix();
-  if(relSec<rollTime) {
+  if(sec<rollTime) {
     offCount = 0;
     offAngleBall=0;
     onAngleBall = radians(degrees(onAngleBall)+90/rollTime/frameRate);
@@ -205,7 +204,7 @@ void drawBall(float relSec) {
     image(ball, 0, 0, ballDiameter, ballDiameter);
     //translate(-(width*.5-80), -height*.9);
   }
-  else if(relSec>=rollTime && relSec<(59-rollTime)) {
+  else if(sec>=rollTime && sec<(59-rollTime)) {
     onCount = 0;
     onAngleBall=0;
     translate(width/2,width*1.43-width-change);
@@ -216,7 +215,7 @@ void drawBall(float relSec) {
     prevDiam = ballDiameter;
     prevChange = change;
   }
-  else if(relSec>=(59-rollTime)){
+  else if(sec>=(59-rollTime)){
     offAngleBall = radians(degrees(offAngleBall)+degChange);
     double side = Math.sqrt(2*width*width-2*width*width*Math.cos(offAngleBall));
     double theta = Math.asin(width*Math.sin(offAngleBall)/side);
@@ -241,16 +240,16 @@ double onAngle = 0;
 double offAngle = 0;
 double xDist = 0;
 double yDist = 0;
-void drawPrince(float mil, float relSec) {
-  float growFactor = 6*relSec;
+void drawPrince(float mil, float sec) {
+  float growFactor = 6*sec;
   float change = growFactor/2;
   float ballDiameter = 160+growFactor;
   float rotAngle = radians(90)/100;
   float rotDistance = ballDiameter-ballDiameter*Math.sin(90-rotAngle);
   float rollSpeed = frameRate*rotDistance;
   float rollTime = (width/2)/rollSpeed;
-  float princeWidth = 180*.6-relSec*.8;
-  float princeHeight = 253*.6-relSec*180/253*.8;
+  float princeWidth = 180*.6-sec*.8;
+  float princeHeight = 253*.6-sec*180/253*.8;
   double numFrame = ((ballDiameter-160)/6)*50;
   double princeDegChange = 45/(59-2*rollTime)/50;
   double princeAngle = radians(princeDegChange*numFrame);
@@ -266,9 +265,9 @@ void drawPrince(float mil, float relSec) {
   if(princeFrames>numFrames*5) prince = p6;
   if(princeFrames>numFrames*6) princeFrames=0;
   
-  float change = 6*relSec/2;
+  float change = 6*sec/2;
   double degChange = 90/rollTime/frameRate;
-  if(relSec<rollTime) {
+  if(sec<rollTime) {
     offAngle = 0;
     onAngle = radians(degrees(onAngle)+degChange);
     double side = Math.sqrt(2*width*width-2*width*width*Math.cos(onAngle));
@@ -284,7 +283,7 @@ void drawPrince(float mil, float relSec) {
       princeHeight
     );
   }
-  else if(relSec>=(59-rollTime)) {
+  else if(sec>=(59-rollTime)) {
     princeAngle = 0;
     offAngle = radians(degrees(offAngle)+degChange);
     double side = Math.sqrt(2*width*width-2*width*width*Math.cos(offAngle));
@@ -297,8 +296,8 @@ void drawPrince(float mil, float relSec) {
       prince,
       width/2+xTranslate-ballDiameter/2-princeWidth*.7,
       width*1.43-width-ballDiameter/2+yTranslate+princeHeight*.4,
-      180*.6-relSec*.3,
-      253*.6-relSec*180/253*.8
+      180*.6-sec*.3,
+      253*.6-sec*180/253*.8
     );
   }
   else {
@@ -315,8 +314,8 @@ void drawPrince(float mil, float relSec) {
       prince,
       width/2-radius+xTranslate-princeWidth*.7,
       width*1.43-width-radius+yTranslate+princeHeight*.4,
-      180*.6-relSec*.3,
-      253*.6-relSec*180/253*.8
+      180*.6-sec*.3,
+      253*.6-sec*180/253*.8
     );
   }
 }
