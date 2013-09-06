@@ -340,16 +340,32 @@ void drawPrince(float mil, float sec) {
 // Minutes
 // ------------------------------------------------------------
 void drawMins(int minutes) {
+  int hspacing = width/30.3;
+  int vspacing = height/24;
+  int dot_size = 10;
   int row=1,col=-1;
   for(int m=0;m<minutes;m++) {
     col++;
-    if(15+col*30>=width) {
+    if(m==30) {
       row += 1;
       col = 0;
     }
     fill(255,255,255);
-    //ellipse(15+30*col,15+30*(row-1),10,10);
-    textSize(10);
-    text(m+1,15+30*col,15+30*(row-1));
+    ellipse(24+hspacing*col,24+vspacing*(row-1),dot_size,dot_size);
   }
 }
+
+// void drawMins(int minutes) {
+//   int row=1,col=-1;
+//   for(int m=0;m<minutes;m++) {
+//     col++;
+//     if(15+col*30>=width) {
+//       row += 1;
+//       col = 0;
+//     }
+//     fill(255,255,255);
+//     //ellipse(15+30*col,15+30*(row-1),10,10);
+//     textSize(10);
+//     text(m+1,15+30*col,15+30*(row-1));
+//   }
+// }
