@@ -1,6 +1,6 @@
 // GLOBAL VARS
 // ------------------------------------------------------------
-PImage ball, grass, bg_gradient;
+PImage ball, grass, clouds, stars, bg_gradient, bg_gradient_w;
 PImage p1,p2,p3,p4,p5,p6;
 PFont font;
 int princeFrames; //for prince animation
@@ -26,7 +26,10 @@ void setup() {
 
   ball = loadImage("src/img/blur.png");
   grass = loadImage("src/img/grass.png");
+  clouds = loadImage("src/img/cloudz.png");
+  stars = loadImage("src/img/stars.png");
   bg_gradient = loadImage("src/img/bg-gradient.png");
+  bg_gradient_w = loadImage("src/img/bg-gradient-w.png");
 
   int hr = hour();
   if(hr >= 7 && hr < 10) { //morning
@@ -53,8 +56,10 @@ void draw() {
   // overlay bg
   if(hr >= 7 && hr < 10) { //morning
     background(225, 229, 13);
+    image(bg_gradient_w, 0, 0, width, height);
   } else if(hr >= 10 && hr < 16) { //day
     background(89,176,246);
+    image(bg_gradient_w, 0, 0, width, height);
   } else if(hr >= 16 && hr < 19) { //dusk
     background(232, 35, 12);
     image(bg_gradient, 0, 0, width, height);
@@ -92,7 +97,7 @@ void draw() {
 // ------------------------------------------------------------
 void drawEnvironment(int hr) {
   boolean clouds=false, smclouds=false, sun=false, sunrays=false, starry=false;
-  
+
   // determine effects
   if(hr >= 7 && hr < 10) { //morning
     sunrays = true;
@@ -134,42 +139,23 @@ void drawEnvironment(int hr) {
     translate(-width/2, -width*1.43); //center coords (-)
     popMatrix();
   }
-  /*
   if(clouds) { //rotating clouds
     pushMatrix();
-    translate(width/2,1200);
-    rotate(-frameCount*radians(90)/600);
-    translate(-1200,-1200);
-    tint(255, 240);
-    image(cloudspng,0,0,2400,2400);
-    translate(-width/2, -1200);
-    tint(255, 255);
-    popMatrix();
-  }
-  if(smclouds) { //less-visible clouds
-    pushMatrix();
-    translate(width/2,1200);
+    translate(width/2,height); //center coords (+)
     rotate(-frameCount*radians(90)/500);
-    translate(-1200,-1200);
-    tint(255,40);
-    image(cloudspng,0,0,2400,2400);
-    translate(-width/2, -1200);
-    tint(255, 255);
+    translate(-width,-width); //radius
+    image(clouds,0,0,width*2,width*2);
+    console.log(clouds);
     popMatrix();
   }
-  if(starry) { //rotating stars
+  if(starry) { //rotating clouds
     pushMatrix();
-    translate(width/2,800);
-    rotate(-frameCount*radians(90)/850);
-    translate(-800,-800);
-    tint(255, 210);
-    image(starspng,0,0,1600,1600);
-    translate(-width/2, -800);
-    tint(255, 255);
+    translate(width/2,height); //center coords (+)
+    rotate(-frameCount*radians(90)/1200);
+    translate(-width,-width); //radius
+    image(stars,0,0,width*2,width*2);
     popMatrix();
-    //add moon?
   }
-  */
 }
 
 // Ground
@@ -183,7 +169,6 @@ void drawGrass(float relSec) {
     rotate(-frameCount*radians(90)/100); //frame of reference, should make more fluid tho
   translate(-width, -width);
   image(grass,0,0,width*2,width*2);
-  //translate(-width*.43,-height*.7);
   popMatrix();
 }
 
