@@ -322,14 +322,12 @@ void drawPrince(float mil, float relSec) {
     double radius = ballDiameter/2;
     onAngle = 0;
     princeAngle = radians(degrees(princeAngle)+princeDegChange);
-    //console.log("princeAngle is", princeAngle);
     double side = Math.sqrt(2*radius*radius-2*radius*radius*Math.cos(princeAngle));
     double theta = Math.asin(radius*Math.sin(princeAngle)/side);
     double phi = 90-degrees(theta);
     phi = radians(phi);
     double xTranslate = side*Math.sin(phi);
     double yTranslate = side*Math.sin(theta);
-    //console.log("radius is", radius);
     image(
       prince,
       width/2-radius+xTranslate-princeWidth*.7,
