@@ -140,10 +140,10 @@ void drawEnvironment(int hr) {
   }
   if(clouds) { //rotating clouds
     pushMatrix();
-    translate(width/2,height); //center coords (+)
-    rotate(-frameCount*radians(90)/500);
-    translate(-width*1.25,-width*1.25); //radius
-    image(cloudz,0,0,width*2.5,width*2.5);
+    translate(width/2,height*1.5); //center coords (+)
+    rotate(-frameCount*radians(90)/1000);
+    translate(-width*1.6,-width*1.6); //radius
+    image(cloudz,0,0,width*3.2,width*3.2);
     popMatrix();
   }
   if(starry) { //rotating clouds
