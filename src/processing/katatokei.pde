@@ -7,6 +7,23 @@ int princeFrames; //for prince animation
 float oldWidth;
 float oldHeight;
 
+float offset = 0;
+if(width > 1400) {
+  offset = height*2.5;
+}
+else if(width > 1000) {
+  offset = height*2.1;
+}
+else if(width > 860) {
+  offset = height*1.9;
+}
+else if(width > 680) {
+  offset = height*1.5;
+}
+else if(width > 540) {
+  offset = height*1.4;
+}
+
 // SETUP
 // ================================================================================
 void setup() {
@@ -45,7 +62,6 @@ void setup() {
   }
 }
 
-
 // DRAW
 // ================================================================================
 void draw() {  
@@ -75,7 +91,7 @@ void draw() {
   if(hrdisp>9) {
     textFont(font, 750);
     textAlign(CENTER);
-    text(hrdisp, width/2, height-100);
+    text(hrdisp, width/2, height-100-offset);
   }
   else {
     if(hrdisp==0) {
@@ -83,7 +99,7 @@ void draw() {
     }
     textFont(font, 850);
     textAlign(CENTER);
-    text(hrdisp, width/2, height-100);
+    text(hrdisp, width/2, height-100-offset);
   }
   
   drawEnvironment(hr);
@@ -130,7 +146,7 @@ void drawEnvironment(int hr) {
   // 
   if(sun) { //rotating sun
     pushMatrix();
-    translate(width/2,width*1.43); //center coords (+)
+    translate(width/2,offset); //center coords (+)
     rotate(-frameCount*radians(90)/2500);
     translate(-width/4,-width*1.3); //radius
     fill(255,220,0);
@@ -140,7 +156,7 @@ void drawEnvironment(int hr) {
   }
   if(clouds) { //rotating clouds
     pushMatrix();
-    translate(width/2,height*1.5); //center coords (+)
+    translate(width/2,offset); //center coords (+)
     rotate(-frameCount*radians(90)/1000);
     translate(-width*1.6,-width*1.6); //radius
     image(cloudz,0,0,width*3.2,width*3.2);
@@ -148,23 +164,23 @@ void drawEnvironment(int hr) {
   }
   if(starry) { //rotating stars
     pushMatrix();
-    translate(width/2,height); //center coords (+)
+    translate(width/2,offset); //center coords (+)
     rotate(-frameCount*radians(90)/1200);
-    translate(-width,-width); //radius
+    translate(-width,-width-offset); //radius
     image(stars,0,0,width*2,width*2);
     popMatrix();
   }
   if(rays) { //rotating sun rays
     pushMatrix();
-    translate(width/2,height*1.3); //center coords (+)
+    translate(width/2,offset); //center coords (+)
     rotate(-frameCount*radians(90)/1000);
-    translate(-width,-width); //radius
+    translate(-width,-width-offset); //radius
     image(rayz,0,0,width*2,width*2);
     popMatrix();
   }
   if(miniclouds) { //rotating transparent clouds
     pushMatrix();
-    translate(width/2,height*1.5); //center coords (+)
+    translate(width/2,offset); //center coords (+)
     rotate(-frameCount*radians(90)/500);
     translate(-width*1.6,-width*1.6); //radius
     image(cloudztran,0,0,width*3.2,width*3.2);
@@ -176,11 +192,8 @@ void drawEnvironment(int hr) {
 // ------------------------------------------------------------
 void drawGrass(float sec) {
   pushMatrix();
-  translate(width/2,width*1.43);
-  if(sec>=2 && sec <58)
-    rotate(-frameCount*radians(90)/100);
-  else 
-    rotate(-frameCount*radians(90)/100); //frame of reference, should make more fluid tho
+  translate(width/2,offset);
+  rotate(-frameCount*radians(90)/100);
   translate(-width, -width);
   image(grass,0,0,width*2,width*2);
   popMatrix();
@@ -214,7 +227,7 @@ void drawBall(float sec) {
     phi = radians(phi);
     double xTranslate = side*Math.sin(phi);
     double yTranslate = side*Math.sin(theta);
-    translate(-width/2+xTranslate-ballDiameter/2,width*1.5-yTranslate-ballDiameter/2);
+    translate(-width/2+xTranslate-ballDiameter/2,offset-yTranslate-ballDiameter/2);
     rotate(onCount*rotAngle);
     translate(-ballDiameter/2, -ballDiameter/2);
     image(ball, 0, 0, ballDiameter, ballDiameter);
@@ -222,7 +235,7 @@ void drawBall(float sec) {
   else if(sec>=rollTime && sec<(59-rollTime)) {
     onCount = 0;
     onAngleBall=0;
-    translate(width/2,width*1.43-width-change);
+    translate(width/2,offset-width-change);
     rotate(frameCount*radians(90)/20);
     translate(-ballDiameter/2, -ballDiameter/2);
     image(ball, 0, 0, ballDiameter, ballDiameter);
@@ -237,7 +250,7 @@ void drawBall(float sec) {
     phi = radians(phi);
     double xTranslate = side*Math.sin(theta);
     double yTranslate = side*Math.sin(phi);
-    translate(width/2,width*1.43-width-change);
+    translate(width/2,offset-width-change);
     rotate(offCount*rotAngle);
     translate(xTranslate-prevDiam/2, yTranslate-prevDiam/2);
     image(ball, 0, 0, ballDiameter, ballDiameter);
@@ -292,7 +305,7 @@ void drawPrince(float mil, float sec) {
     image(
       prince,
       -width/2+xTranslate-ballDiameter/2-princeWidth*.4,
-      width*1.43-yTranslate-ballDiameter/2+princeHeight*.4,
+      offset-yTranslate-ballDiameter/2+princeHeight*.4,
       princeWidth,
       princeHeight
     );
@@ -310,7 +323,7 @@ void drawPrince(float mil, float sec) {
     image(
       prince,
       width/2+xTranslate-ballDiameter/2+princeWidth*.4,
-      width*1.43-width+yTranslate,
+      offset-width+yTranslate,
       180*.6-sec*.3,
       253*.6-sec*180/253*.8
     );
@@ -329,7 +342,7 @@ void drawPrince(float mil, float sec) {
     image(
       prince,
       width/2-radius+xTranslate-princeWidth*.7,
-      width*1.43-width-radius+yTranslate+princeHeight*.4,
+      offset-width-radius+yTranslate+princeHeight*.4,
       180*.6-sec*.3,
       253*.6-sec*180/253*.8
     );
