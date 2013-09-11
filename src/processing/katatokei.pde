@@ -181,6 +181,10 @@ void drawEnvironment(int hr) {
   popMatrix();
 }
 
+// Offset
+// ------------------------------------------------------------
+int offset = width/height * 112;
+
 // Ground
 // ------------------------------------------------------------
 void drawGrass(float sec) {
@@ -363,18 +367,3 @@ void drawMins(int minutes) {
     ellipse(24+hspacing*col,24+vspacing*(row-1),dot_size,dot_size);
   }
 }
-
-// void drawMins(int minutes) {
-//   int row=1,col=-1;
-//   for(int m=0;m<minutes;m++) {
-//     col++;
-//     if(15+col*30>=width) {
-//       row += 1;
-//       col = 0;
-//     }
-//     fill(255,255,255);
-//     //ellipse(15+30*col,15+30*(row-1),10,10);
-//     textSize(10);
-//     text(m+1,15+30*col,15+30*(row-1));
-//   }
-// }
