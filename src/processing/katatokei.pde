@@ -136,18 +136,17 @@ void drawEnvironment(int hr) {
     pushMatrix();
     translate(width/2,offset); //center coords (+)
     rotate(-frameCount*radians(90)/2500);
-    translate(-width/4,-width*1.3); //radius
+    translate(-width,-offset); //radius
     fill(255,220,0);
     ellipse(0,0,100,100); //make sure it's at 0,0
-    translate(-width/2, -width*1.43); //center coords (-)
     popMatrix();
   }
   if(clouds) { //rotating clouds
     pushMatrix();
     translate(width/2,offset); //center coords (+)
     rotate(-frameCount*radians(90)/1000);
-    translate(-width*1.6,-offset); //radius
-    image(cloudz,0,0,width*3.2,width*3.2);
+    translate(-width,-width); //radius
+    image(cloudz,0,0,width*2,width*2);
     popMatrix();
   }
   if(starry) { //rotating stars
