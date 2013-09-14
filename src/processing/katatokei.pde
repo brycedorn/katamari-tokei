@@ -1,6 +1,6 @@
 // GLOBAL VARS
 // ------------------------------------------------------------
-PImage ball, grass, clouds, stars, bg_gradient, bg_gradient_w;
+PImage ball, grass, clouds, stars, king, bg_gradient, bg_gradient_w;
 PImage p1,p2,p3,p4,p5,p6;
 PFont font;
 int princeFrames; //for prince animation
@@ -45,6 +45,7 @@ void setup() {
   grass = loadImage("src/img/grass.png");
   stars = loadImage("src/img/stars.png");
   rayz = loadImage("src/img/rays.png");
+  king = loadImage("src/img/king.png");
   cloudz = loadImage("src/img/clouds.png");
   cloudztran = loadImage("src/img/cloudstran.png");
   bg_gradient = loadImage("src/img/bg-gradient.png");
@@ -186,7 +187,19 @@ void drawEnvironment(int hr) {
     image(cloudztran,0,0,width*3.2,width*3.2);
     popMatrix();
   }
+
+  //king 
+  pushMatrix();
+  translate(width/2,height*1.5); //center coords (+)
+  rotate(-frameCount*radians(90)/1000);
+  translate(-width*1.6,-width*1.6); //radius
+  image(king,0,0,width*3.2,width*3.2);
+  popMatrix();
 }
+
+// Offset
+// ------------------------------------------------------------
+int offset = width/height * 112;
 
 // Ground
 // ------------------------------------------------------------
@@ -367,18 +380,3 @@ void drawMins(int minutes) {
     ellipse(24+hspacing*col,24+vspacing*(row-1),dot_size,dot_size);
   }
 }
-
-// void drawMins(int minutes) {
-//   int row=1,col=-1;
-//   for(int m=0;m<minutes;m++) {
-//     col++;
-//     if(15+col*30>=width) {
-//       row += 1;
-//       col = 0;
-//     }
-//     fill(255,255,255);
-//     //ellipse(15+30*col,15+30*(row-1),10,10);
-//     textSize(10);
-//     text(m+1,15+30*col,15+30*(row-1));
-//   }
-// }
