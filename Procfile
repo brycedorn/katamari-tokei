@@ -1,0 +1,1 @@
+worker: while true; do ping.php; sleep 10; done
