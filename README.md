@@ -3,6 +3,10 @@ katamari-tokei
 
 ###### A clock design inspired by Katamari Damacy
 
+## Setup
+Install the latest version of [Processing](https://www.processing.org/download/), and open katatokei.pde!
+
+## Dev tip
 Add this to the bottom of your .git/config file:
 ```
 [remote "all"]
