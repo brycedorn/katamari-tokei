@@ -7,12 +7,3 @@ katamari-tokei
 
 ## Setup
 Install the latest version of [Processing](https://www.processing.org/download/), and open katatokei.pde!
-
-## Dev tip
-Add this to the bottom of your .git/config file:
-```
-[remote "all"]
-	url = https://github.com/brycedorn/katamari-tokei.git
-	url = git@heroku.com:katatokei.git
-	fetch = +refs/heads/*:refs/remotes/all/*
-```
